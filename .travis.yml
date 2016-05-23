@@ -14,27 +14,9 @@ perl:
 sudo: false             # faster builds as long as you don't need sudo access
 
 before_install:
-  - export MY_BASE_DIRECTORY=`pwd`
-  - eval $(curl https://travis-perl.github.io/init) --auto
-  - cd ${MY_BASE_DIRECTORY}
-
-  # prevent "please tell me who you are" errors for certain DZIL configs
-  - git config --global user.name "Travis CI"
+  - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
+  - source ~/travis-perl-helpers/init --auto
 
 matrix:
   allow_failures:
     - perl: blead       # ignore failures for blead perl
-
-install:
-  # Deal with all the DZIL dependencies, quickly and quietly
-  - cpanm --quiet --notest --skip-satisfied Dist::Zilla 
-  # These are needed by required modules but not picked up by the deps
-  - cpanm --quiet --notest --skip-satisfied Mouse
-  - dzil authordeps | cpanm --quiet --notest --skip-satisfied
-  - dzil listdeps | cpanm --quiet --notest --skip-satisfied
-  - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1 HARNESS_OPTIONS=j10:c HARNESS_TIMER=1
-
-script:
-  - pwd
-  - ls -l
-  - dzil test
