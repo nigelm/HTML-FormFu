@@ -7,9 +7,9 @@ perl:
   - "5.14"
   - "5.12"
   - "5.10"
-  - "5.8.8"
-  #- "dev"               # installs latest developer release of perl (e.g. 5.21.8)
-  #- "blead"             # builds perl from git
+  ###- "5.8.8"          # fails due to Number::Format depedancy  
+  #- "dev"              # installs latest developer release of perl (e.g. 5.21.8)
+  #- "blead"            # builds perl from git
 
 sudo: false             # faster builds as long as you don't need sudo access
 
