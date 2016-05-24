@@ -545,11 +545,11 @@ C<$constraint> (the Constraint object)
 
 Return value: $string
 
-Attempt to return the error message that would be used if this constraint 
+Attempt to return the error message that would be used if this constraint
 generated an error.
 
 This will generally be correct for simple constraints with a fixed message or
-which use a placeholder from a known value, such as 
+which use a placeholder from a known value, such as
 L<HTML::FormFu::Constraint::Min/min>.
 This will generally C<not> return the correct message for constraints which
 use L<HTML::FormFu::Role::Constraint::Others/others>, where the field with an

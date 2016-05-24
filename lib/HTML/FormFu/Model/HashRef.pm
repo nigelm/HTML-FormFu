@@ -334,17 +334,17 @@ HTML::FormFu::Model::HashRef - handle hashrefs
         street => 'Somewhere' },
       { id => 3,
         street => 'Somewhere Else' }
-    ]    
+    ]
     } );
-  
+
   $form->default_model('HashRef');
   my $hashref = $form->model->create();
-  
+
   # $hashref is very much the same as the hashref you passed to default_values()
 
 =head1 DESCRIPTION
 
-If you need the content of a formular as hashref or for processing with other modules 
+If you need the content of a formular as hashref or for processing with other modules
 like C<JSON> you can use this model.
 
 =head1 METHODS
@@ -357,7 +357,7 @@ or by simply submitting the form.
 
 If L</deflators> is true all deflators are processed (defaults to C<1>).
 
-If L</options> is true the value of all elements which have options like 
+If L</options> is true the value of all elements which have options like
 L<HTML::FormFu::Element::Select> will be transformed.
 
   ---

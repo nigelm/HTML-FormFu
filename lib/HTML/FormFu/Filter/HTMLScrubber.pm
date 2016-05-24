@@ -70,7 +70,7 @@ Carl Franks, C<cfranks@cpan.org>
 
 Extended by Nigel Metheringham, C<nigelm@cpan.org>
 
-Based on the original source code of L<HTML::Widget::Filter::HTMLStrip>, by 
+Based on the original source code of L<HTML::Widget::Filter::HTMLStrip>, by
 Lyo Kato, C<lyo.kato@gmail.com>
 
 =head1 LICENSE

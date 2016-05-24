@@ -19,7 +19,7 @@ HTML::FormFu::Constraint::Printable - Printable Characters Constraint
 
 =head1 DESCRIPTION
 
-Constraint that checks against the unicode C<print> character class, 
+Constraint that checks against the unicode C<print> character class,
 (Alphanumeric, punct, and space).
 
 =head1 SEE ALSO

@@ -74,11 +74,11 @@ Arguments: \@parts
 
 Used to build a L<Regexp::Common> regex.
 
-The following definition is equivalent to 
+The following definition is equivalent to
 C<< $RE{URI}{HTTP}{-scheme => 'https?'} >>
 
     type: Regex
-    common: 
+    common:
       - URI
       - HTTP
       - { '-scheme': 'https?' }
@@ -100,7 +100,7 @@ L<HTML::FormFu>
 
 Carl Franks C<cfranks@cpan.org>
 
-Based on the original source code of L<HTML::Widget::Constraint::Regex>, by 
+Based on the original source code of L<HTML::Widget::Constraint::Regex>, by
 Sebastian Riedel, C<sri@oook.de>.
 
 =head1 LICENSE

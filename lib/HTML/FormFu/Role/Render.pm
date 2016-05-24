@@ -85,7 +85,7 @@ $error
 The template files should have been installed somewhere in \@INC as part of
 the installation process.
 If you're using Catalyst, see Catalyst::Helper::HTML::FormFu.
-Alternatively, you can create a local copy of the files by running 
+Alternatively, you can create a local copy of the files by running
     `html_formfu_deploy.pl`.
 Then set \$form->tt_args->{INCLUDE_PATH} to point to the template directory.
 ERROR_MESSAGE

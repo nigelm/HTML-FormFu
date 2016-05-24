@@ -567,7 +567,7 @@ HTML::FormFu::Attribute - accessor class
 
 Carl Franks, C<cfranks@cpan.org>
 
-Based on the original source code of L<HTML::Widget::Accessor>, by 
+Based on the original source code of L<HTML::Widget::Accessor>, by
 Sebastian Riedel, C<sri@oook.de>.
 
 =head1 LICENSE

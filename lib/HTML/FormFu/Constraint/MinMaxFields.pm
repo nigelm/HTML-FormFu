@@ -115,7 +115,7 @@ HTML::FormFu::Constraint::MinMaxFields - Min/Max Multi-field Constraint
 
 =head1 DESCRIPTION
 
-Ensure that at least a minimum and only a maximum number of fields are 
+Ensure that at least a minimum and only a maximum number of fields are
 present.
 
 This constraint doesn't honour the C<not()> value.
@@ -151,7 +151,7 @@ Default Value: 0
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from  
+Is a sub-class of, and inherits methods from
 L<HTML::FormFu::Role::Constraint::Others>, L<HTML::FormFu::Constraint>
 
 L<HTML::FormFu>

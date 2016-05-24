@@ -82,7 +82,7 @@ Inherited, see L<HTML::FormFu::QueryType::CGI/type> for details.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
+Is a sub-class of, and inherits methods from
 L<HTML::FormFu::QueryType::CGI>, L<HTML::FormFu::Upload>
 
 L<HTML::FormFu>, L<HTML::FormFu::Element::File>

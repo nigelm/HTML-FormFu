@@ -23,7 +23,7 @@ HTML::FormFu::Constraint::File::MinSize - Minimum File Size Constraint
 
 Ensure that an uploaded file meets minimum size constraints.
 
-Overrides L<HTML::FormFu::Constraint/localize_args>, so that the value of 
+Overrides L<HTML::FormFu::Constraint/localize_args>, so that the value of
 L</minimum> is passed as an argument to L<localize|HTML::FormFu/localize>.
 
 This constraint doesn't honour the C<not()> value.
@@ -40,7 +40,7 @@ L</min> is an alias for L</minimum>.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from L<HTML::FormFu::File::Size>, 
+Is a sub-class of, and inherits methods from L<HTML::FormFu::File::Size>,
 L<HTML::FormFu::Constraint>
 
 L<HTML::FormFu>
