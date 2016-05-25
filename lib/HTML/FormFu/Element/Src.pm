@@ -1,5 +1,8 @@
 package HTML::FormFu::Element::Src;
 
+use strict;
+# VERSION
+
 use Moose;
 extends 'HTML::FormFu::Element::Block';
 

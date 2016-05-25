@@ -1,5 +1,8 @@
 package HTML::FormFu::Element::Repeatable;
 
+use strict;
+# VERSION
+
 use Moose;
 use MooseX::Attribute::FormFuChained;
 extends 'HTML::FormFu::Element::Block';

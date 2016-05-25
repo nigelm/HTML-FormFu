@@ -1,5 +1,8 @@
 package HTML::FormFu::Element::Blank;
 
+use strict;
+# VERSION
+
 use Moose;
 
 extends 'HTML::FormFu::Element';

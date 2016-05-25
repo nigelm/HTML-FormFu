@@ -4,6 +4,9 @@ use HTML::FormFu::Util qw( process_attrs );
 use Carp qw( croak );
 use Scalar::Util qw( reftype );
 
+use strict;
+# VERSION
+
 use Moose::Role;
 
 our $SHARE_DIR;

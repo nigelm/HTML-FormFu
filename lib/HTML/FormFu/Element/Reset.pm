@@ -1,5 +1,8 @@
 package HTML::FormFu::Element::Reset;
 
+use strict;
+# VERSION
+
 use Moose;
 
 extends 'HTML::FormFu::Element::Button';

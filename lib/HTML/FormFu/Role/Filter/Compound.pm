@@ -1,5 +1,8 @@
 package HTML::FormFu::Role::Filter::Compound;
 
+use strict;
+# VERSION
+
 use Moose::Role;
 use MooseX::Attribute::FormFuChained;
 

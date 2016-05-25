@@ -1,5 +1,8 @@
 package HTML::FormFu::Inflator::DateTime;
 
+use strict;
+# VERSION
+
 use Moose;
 use MooseX::Attribute::FormFuChained;
 extends 'HTML::FormFu::Inflator';

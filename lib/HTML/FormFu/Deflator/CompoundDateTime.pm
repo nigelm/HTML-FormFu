@@ -1,5 +1,8 @@
 package HTML::FormFu::Deflator::CompoundDateTime;
 
+use strict;
+# VERSION
+
 use Moose;
 use MooseX::Attribute::FormFuChained;
 extends 'HTML::FormFu::Deflator';

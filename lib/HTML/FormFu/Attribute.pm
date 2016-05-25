@@ -2,6 +2,9 @@ package HTML::FormFu::Attribute;
 
 use strict;
 use warnings;
+
+# VERSION
+
 use Exporter qw( import );
 use Carp qw( croak );
 use Class::MOP::Method;

@@ -1,5 +1,8 @@
 package HTML::FormFu::QueryType::Catalyst;
 
+use strict;
+# VERSION
+
 use Moose;
 use MooseX::Attribute::FormFuChained;
 

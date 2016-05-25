@@ -1,5 +1,8 @@
 package HTML::FormFu::Constraint::MaxRange;
 
+use strict;
+# VERSION
+
 use Moose;
 extends 'HTML::FormFu::Constraint::Range';
 

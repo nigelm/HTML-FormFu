@@ -1,5 +1,8 @@
 package HTML::FormFu::Element::Number;
 
+use strict;
+# VERSION
+
 use Moose;
 
 extends 'HTML::FormFu::Element::Text';

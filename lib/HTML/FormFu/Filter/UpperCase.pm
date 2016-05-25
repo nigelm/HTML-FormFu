@@ -1,5 +1,8 @@
 package HTML::FormFu::Filter::UpperCase;
 
+use strict;
+# VERSION
+
 use Moose;
 extends 'HTML::FormFu::Filter';
 

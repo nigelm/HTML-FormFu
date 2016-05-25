@@ -5,6 +5,8 @@ use Config::Any;
 use Data::Dumper ();
 use Regexp::Assemble;
 
+# VERSION
+
 if ( @ARGV == 1 && $ARGV[0] =~ /\A --? h(?:elp)? \z/ix) {
     help();
     exit;

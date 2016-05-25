@@ -1,5 +1,8 @@
 package HTML::FormFu::QueryType::CGI::Simple;
 
+use strict;
+# VERSION
+
 use Moose;
 
 extends 'HTML::FormFu::QueryType::CGI';
