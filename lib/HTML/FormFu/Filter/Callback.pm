@@ -14,6 +14,7 @@ sub filter {
 
     my $callback = $self->callback || sub {$value};
 
+    ## no critic (ProhibitNoStrict);
     no strict 'refs';
 
     return $callback->( $value, $params );

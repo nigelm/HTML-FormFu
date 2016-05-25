@@ -276,7 +276,7 @@ sub get_multi {
         foreach my $multi ( @{ $multis || [] } ) {
             my @multis;
             map { push( @multis, $_->name ) } @{ $multi->get_elements };
-            map { s/_\d+//; $multis{$_} = 1 } @multis;
+            map { my $i = $_; $i =~ s/_\d+//; $multis{$i} = 1 } @multis;
         }
         $self->_multi( \%multis );
     }

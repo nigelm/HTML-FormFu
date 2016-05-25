@@ -59,6 +59,7 @@ for my $method ( qw(
 
     my $name = __PACKAGE__ . "::get_${method}s";
 
+    ## no critic (ProhibitNoStrict);
     no strict 'refs';
 
     *{$name} = $sub;

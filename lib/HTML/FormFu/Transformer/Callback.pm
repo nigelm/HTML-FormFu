@@ -14,6 +14,7 @@ sub transformer {
 
     my $callback = $self->callback || sub {1};
 
+    ## no critic (ProhibitNoStrict);
     no strict 'refs';
 
     my $return = $callback->( $value, $params );

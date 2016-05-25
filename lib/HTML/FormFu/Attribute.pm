@@ -519,7 +519,8 @@ sub mk_attr_bool_accessors {
 
             if ( @_ == 1 ) {
                 # Getter
-                return undef if !exists $self->attributes->{$name};
+                return undef    ## no critic (ProhibitExplicitReturnUndef);
+                    if !exists $self->attributes->{$name};
 
                 return $self->attributes->{$name} ? $self->attributes->{$name}
                                                   : undef;

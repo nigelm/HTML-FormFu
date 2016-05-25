@@ -783,7 +783,8 @@ sub param_value {
 
     croak 'name parameter required' if @_ != 2;
 
-    return undef if !$self->valid($name);
+    return undef    ## no critic (ProhibitExplicitReturnUndef);
+        if !$self->valid($name);
 
     # this is guaranteed to always return a single value
 

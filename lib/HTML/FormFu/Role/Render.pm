@@ -109,8 +109,8 @@ sub _share_dir {
     return if $SHARE_ERROR;
 
     eval {
-        require 'File/ShareDir.pm';
-        require 'File/Spec.pm';
+        require File::ShareDir;
+        require File::Spec;
 
         # dist_dir() doesn't reliably return the directory our files are in.
         # find the path of one of our files, then get the directory from that

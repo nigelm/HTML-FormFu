@@ -14,6 +14,7 @@ sub deflator {
 
     my $callback = $self->callback || sub {shift};
 
+    ## no critic (ProhibitNoStrict);
     no strict 'refs';
 
     return $callback->($value);

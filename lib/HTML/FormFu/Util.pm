@@ -78,7 +78,7 @@ sub debug {
 
     my ( undef, undef, undef, $sub ) = caller(1);
 
-    require 'Data/Dumper.pm';
+    require Data::Dumper;
 
     warn "\n" if $sub ne $LAST_SUB;
 
@@ -398,7 +398,7 @@ sub require_class {
 sub xml_escape {
     my $val = shift;
 
-    return undef if !defined $val;
+    return undef if !defined $val;   ## no critic (ProhibitExplicitReturnUndef);
 
     if ( ref $val eq 'HASH' ) {
         my %val = %$val;
