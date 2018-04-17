@@ -1,12 +1,16 @@
+use strict;
+
 package HTML::FormFu::Constraint::Set;
 
+# ABSTRACT: Set of Values Constraint
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Constraint';
 
 use Clone ();
 
-has set => ( is => 'rw', traits => ['FormFuChained'] );
+has set => ( is => 'rw', traits => ['Chained'] );
 
 sub constrain_value {
     my ( $self, $value ) = @_;
@@ -37,10 +41,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Constraint::Set - Set of Values Constraint
 
 =head1 SYNOPSIS
 

@@ -1,12 +1,16 @@
+use strict;
+
 package HTML::FormFu::Filter::Encode;
 
+# ABSTRACT: Encode/Decode Submitted Values
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Filter';
 
 use Encode qw(encode decode FB_CROAK);
 
-has encode_to => ( is => 'rw', traits => ['FormFuChained'] );
+has encode_to => ( is => 'rw', traits => ['Chained'] );
 
 has _candidates => ( is => 'rw' );
 
@@ -83,10 +87,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Filter::Encode - Encode/Decode Submitted Values
 
 =head1 SYNOPSIS
 

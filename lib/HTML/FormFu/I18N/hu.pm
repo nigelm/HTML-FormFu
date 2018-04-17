@@ -1,3 +1,5 @@
+use strict;
+
 package HTML::FormFu::I18N::hu;
 
 use Moose;

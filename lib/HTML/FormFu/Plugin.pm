@@ -1,13 +1,17 @@
+use strict;
+
 package HTML::FormFu::Plugin;
 
+# ABSTRACT: base class for plugins
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 
 with 'HTML::FormFu::Role::HasParent', 'HTML::FormFu::Role::Populate';
 
 use HTML::FormFu::ObjectUtil qw( form parent );
 
-has type => ( is => 'rw', traits => ['FormFuChained'] );
+has type => ( is => 'rw', traits => ['Chained'] );
 
 sub pre_process { }
 
@@ -32,10 +36,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Plugin - base class for plugins
 
 =head2 DESCRIPTION
 

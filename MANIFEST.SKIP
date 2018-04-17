@@ -2,10 +2,9 @@
 ^lib\/HTML\/FormFu\/Filter\/Default\.pm$
 
 # not ready yet
-^t-aggregate\/multiform-misc\/file
+^t\/multiform-misc\/file
 
 ^benchmarks\b
 ^examples\/client-side-constraint\b
-^xt\/
 
 ^\.perltidyrc$

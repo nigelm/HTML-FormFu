@@ -1,7 +1,11 @@
+use strict;
+
 package HTML::FormFu::Inflator::DateTime;
 
+# ABSTRACT: DateTime inflator
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Inflator';
 
 use HTML::FormFu::Constants qw( $EMPTY_STR );
@@ -9,8 +13,8 @@ use DateTime::Format::Builder;
 use DateTime::Format::Strptime;
 use Scalar::Util qw( reftype );
 
-has strptime  => ( is => 'rw', traits => ['FormFuChained'] );
-has time_zone => ( is => 'rw', traits => ['FormFuChained'] );
+has strptime  => ( is => 'rw', traits => ['Chained'] );
+has time_zone => ( is => 'rw', traits => ['Chained'] );
 
 has _builder => (
     is      => 'rw',
@@ -88,10 +92,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Inflator::DateTime - DateTime inflator
-
 =head1 SYNOPSIS
 
     ---
@@ -100,12 +100,12 @@ HTML::FormFu::Inflator::DateTime - DateTime inflator
         name: start_date
         inflators:
           - type: DateTime
-            parser: 
+            parser:
               strptime: '%d-%m-%Y'
             strptime:
               pattern: '%d-%b-%Y'
               locale: de
-      
+
       - type: Text
         name: end_time
         inflators:
@@ -143,7 +143,7 @@ For a corresponding deflator, see L<HTML::FormFu::Deflator::Strftime>.
 
 Arguments: \%args
 
-Required. Define the expected input string, so L<DateTime::Format::Builder> 
+Required. Define the expected input string, so L<DateTime::Format::Builder>
 knows how to inflate it into a L<DateTime> object.
 
 Accepts arguments to be passed to L<DateTime::Format::Builder/parser>.
@@ -154,7 +154,7 @@ Arguments: \%args
 
 Arguments: $string
 
-Optional. Define the format that should be used if the L<DateTime> object is 
+Optional. Define the format that should be used if the L<DateTime> object is
 stringified.
 
 =head2 time_zone
@@ -166,9 +166,9 @@ created. This is useful if the string to parse does not contain time zone
 information and you want the DateTime to be in a specific zone instead
 of the floating one (which is likely).
 
-Accepts a hashref of arguments to be passed to 
-L<DateTime::Format::Strptime/new>. Alternatively, accepts a single string 
-argument, suitable for passing to 
+Accepts a hashref of arguments to be passed to
+L<DateTime::Format::Strptime/new>. Alternatively, accepts a single string
+argument, suitable for passing to
 C<< DateTime::Format::Strptime->new( pattern => $string ) >>.
 
 =head1 AUTHOR

@@ -1,12 +1,16 @@
+use strict;
+
 package HTML::FormFu::OutputProcessor::StripWhitespace;
 
+# ABSTRACT: Strip shitespace from HTML output
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::OutputProcessor';
 
 use HTML::FormFu::Constants qw( $EMPTY_STR );
 use HTML::TokeParser::Simple;
-use List::MoreUtils qw( any );
+use List::Util 1.33 qw( any );
 
 has collapse_tags => (
     is      => 'rw',
@@ -25,7 +29,7 @@ has collapse_tags => (
                 ) ];
     },
     lazy   => 1,
-    traits => ['FormFuChained'],
+    traits => ['Chained'],
 );
 
 has collapse_consecutive_tags => (
@@ -37,7 +41,7 @@ has collapse_consecutive_tags => (
                 ) ];
     },
     lazy   => 1,
-    traits => ['FormFuChained'],
+    traits => ['Chained'],
 );
 
 sub process {
@@ -119,10 +123,12 @@ sub process {
 
 __PACKAGE__->meta->make_immutable;
 
+use strict;
+
 package HTML::FormFu::OutputProcessor::StripWhitespace::_iter;
 
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 
 sub new {
     my ( $class, @tags ) = @_;
@@ -163,10 +169,6 @@ __PACKAGE__->meta->make_immutable( inline_constructor => 0 );
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::OutputProcessor::StripWhitespace - Strip shitespace from HTML output
 
 =head1 SYNOPSIS
 

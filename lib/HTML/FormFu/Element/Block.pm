@@ -1,7 +1,11 @@
+use strict;
+
 package HTML::FormFu::Element::Block;
 
+# ABSTRACT: Block element
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 
 extends 'HTML::FormFu::Element';
 
@@ -15,13 +19,13 @@ with 'HTML::FormFu::Role::CreateChildren',
 use HTML::FormFu::Constants qw( $EMPTY_STR );
 use HTML::FormFu::Util qw( _get_elements xml_escape process_attrs );
 use Clone ();
-use List::MoreUtils qw( uniq );
+use List::Util 1.45 qw( uniq );
 use Carp qw( croak );
 
-has tag                  => ( is => 'rw', traits => ['FormFuChained'] );
-has nested_name          => ( is => 'rw', traits => ['FormFuChained'] );
-has original_nested_name => ( is => 'rw', traits => ['FormFuChained'] );
-has auto_block_id        => ( is => 'rw', traits => ['FormFuChained'] );
+has tag                  => ( is => 'rw', traits => ['Chained'] );
+has nested_name          => ( is => 'rw', traits => ['Chained'] );
+has original_nested_name => ( is => 'rw', traits => ['Chained'] );
+has auto_block_id        => ( is => 'rw', traits => ['Chained'] );
 
 has _elements => (
     is      => 'rw',
@@ -127,8 +131,8 @@ sub render_data {
 sub render_data_non_recursive {
     my ( $self, $args ) = @_;
 
-    my $render = $self->SUPER::render_data_non_recursive( {
-            tag     => $self->tag,
+    my $render = $self->SUPER::render_data_non_recursive(
+        {   tag     => $self->tag,
             content => xml_escape( $self->content ),
             $args ? %$args : (),
         } );
@@ -225,8 +229,8 @@ sub string {
 sub start {
     my ($self) = @_;
 
-    return $self->tt( {
-            filename    => 'start_block',
+    return $self->tt(
+        {   filename    => 'start_block',
             render_data => $self->render_data_non_recursive,
         } );
 }
@@ -234,8 +238,8 @@ sub start {
 sub end {
     my ($self) = @_;
 
-    return $self->tt( {
-            filename    => 'end_block',
+    return $self->tt(
+        {   filename    => 'end_block',
             render_data => $self->render_data_non_recursive,
         } );
 }
@@ -260,19 +264,15 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Element::Block - Block element
-
 =head1 SYNOPSIS
 
     ---
-    elements: 
+    elements:
       - type: Block
-        elements: 
+        elements:
           - type: Text
             name: foo
-    
+
       - type: Block
         tag: span
         content: Whatever
@@ -291,21 +291,21 @@ Default Value: 'div'
 
 =head2 content
 
-If L</content> is set, it is used as the block's contents, and any attached 
+If L</content> is set, it is used as the block's contents, and any attached
 elements are ignored.
 
 =head2 content_xml
 
 Arguments: $string
 
-If you don't want the content to be XML-escaped, use the L</content_xml> 
+If you don't want the content to be XML-escaped, use the L</content_xml>
 method instead of L</content>.
 
 =head2 content_loc
 
 Arguments: $localization_key
 
-To set the content to a localized string, set L</content_loc> to a key in 
+To set the content to a localized string, set L</content_loc> to a key in
 your L10N file instead of using L</content>.
 
 =head2 elements
@@ -392,6 +392,10 @@ Unlike most other auto_* methods, this is not an 'inherited accessor'.
 =head2 auto_label
 
 See L<HTML::FormFu/auto_label> for details.
+
+=head2 auto_error_field_class
+
+See L<HTML::FormFu/auto_error_field_class> for details.
 
 =head2 auto_error_class
 

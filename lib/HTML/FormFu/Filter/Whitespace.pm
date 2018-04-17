@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Filter::Whitespace;
+
+# ABSTRACT: filter stripping all whitespace
 
 use Moose;
 extends 'HTML::FormFu::Filter::Regex';
@@ -11,10 +15,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Filter::Whitespace - filter stripping all whitespace
-
 =head1 DESCRIPTION
 
 Removes all whitespace.
@@ -23,7 +23,7 @@ Removes all whitespace.
 
 Carl Franks, C<cfranks@cpan.org>
 
-Based on the original source code of L<HTML::Widget::Filter::Whitespace>, by 
+Based on the original source code of L<HTML::Widget::Filter::Whitespace>, by
 Sebastian Riedel, C<sri@oook.de>
 
 =head1 LICENSE

@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Constraint::File::MaxSize;
+
+# ABSTRACT: Maximum File Size Constraint
 
 use Moose;
 extends 'HTML::FormFu::Constraint::File::Size';
@@ -15,15 +19,11 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Constraint::File::MaxSize - Maximum File Size Constraint
-
 =head1 DESCRIPTION
 
 Ensure that an uploaded file meets maximum size constraints.
 
-Overrides L<HTML::FormFu::Constraint/localize_args>, so that the value of 
+Overrides L<HTML::FormFu::Constraint/localize_args>, so that the value of
 L</maximum> is passed as an argument to L<localize|HTML::FormFu/localize>.
 
 This constraint doesn't honour the C<not()> value.

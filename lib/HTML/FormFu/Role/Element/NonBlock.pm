@@ -1,11 +1,14 @@
+use strict;
+
 package HTML::FormFu::Role::Element::NonBlock;
 
+# ABSTRACT: base class for single-tag elements
+
 use Moose::Role;
-use MooseX::Attribute::FormFuChained;
 
 use HTML::FormFu::Util qw( process_attrs );
 
-has tag => ( is => 'rw', traits => ['FormFuChained'] );
+has tag => ( is => 'rw', traits => ['Chained'] );
 
 after BUILD => sub {
     my $self = shift;
@@ -18,8 +21,8 @@ after BUILD => sub {
 around render_data_non_recursive => sub {
     my ( $orig, $self, $args ) = @_;
 
-    my $render = $self->$orig( {
-            tag => $self->tag,
+    my $render = $self->$orig(
+        {   tag => $self->tag,
             $args ? %$args : (),
         } );
 
@@ -49,10 +52,6 @@ sub string {
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Role::Element::NonBlock - base class for single-tag elements
 
 =head1 DESCRIPTION
 

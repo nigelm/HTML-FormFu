@@ -1,3 +1,5 @@
+use strict;
+
 package HTML::FormFu::Exception::Transformer;
 
 use Moose;
@@ -14,11 +16,11 @@ sub transformer {
 around render_data_non_recursive => sub {
     my ( $orig, $self, $args ) = @_;
 
-    my $render = $self->$orig( {
-            stage       => $self->stage,
+    my $render = $self->$orig(
+        {   stage       => $self->stage,
             transformer => $self->transformer,
             $args ? %$args : (),
-        });
+        } );
 
     return $render;
 };

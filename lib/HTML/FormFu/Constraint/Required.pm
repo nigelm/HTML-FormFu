@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Constraint::Required;
+
+# ABSTRACT: Required Field Constraint
 
 use Moose;
 extends 'HTML::FormFu::Constraint';
@@ -15,10 +19,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Constraint::Required - Required Field Constraint
-
 =head1 DESCRIPTION
 
 States that a value must be submitted. The empty string is not allowed.
@@ -33,7 +33,7 @@ L<HTML::FormFu>
 
 Carl Franks, C<cfranks@cpan.org>
 
-Based on the original source code of L<HTML::Widget::Constraint::All>, by 
+Based on the original source code of L<HTML::Widget::Constraint::All>, by
 Sebastian Riedel, C<sri@oook.de>.
 
 =head1 LICENSE

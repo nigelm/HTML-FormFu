@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Element::File;
+
+# ABSTRACT: File upload form field
 
 use Moose;
 
@@ -22,10 +26,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Element::File - File upload form field
-
 =head1 SYNOPSIS
 
     ---
@@ -34,14 +34,14 @@ HTML::FormFu::Element::File - File upload form field
       name: photo
 
     my $photo = $form->param('photo');
-    
+
     my $blob = $photo->slurp;
 
 =head1 DESCRIPTION
 
 File upload form field.
 
-See the documentation relevant to the L<query_type|HTML::FormFu/query_type> 
+See the documentation relevant to the L<query_type|HTML::FormFu/query_type>
 you're using:
 
 =over
@@ -58,9 +58,9 @@ you're using:
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
-L<HTML::FormFu::Role::Element::Input>, 
-L<HTML::FormFu::Role::Element::Field>, 
+Is a sub-class of, and inherits methods from
+L<HTML::FormFu::Role::Element::Input>,
+L<HTML::FormFu::Role::Element::Field>,
 L<HTML::FormFu::Element>
 
 L<HTML::FormFu>

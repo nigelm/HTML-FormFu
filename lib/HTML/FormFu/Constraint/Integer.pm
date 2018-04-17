@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Constraint::Integer;
+
+# ABSTRACT: Unsigned Integer Constraint
 
 use Moose;
 extends 'HTML::FormFu::Constraint::Regex';
@@ -10,10 +14,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Constraint::Integer - Unsigned Integer Constraint
 
 =head1 DESCRIPTION
 
@@ -30,7 +30,7 @@ L<HTML::FormFu>
 
 Carl Franks, C<cfranks@cpan.org>
 
-Based on the original source code of L<HTML::Widget::Constraint::Integer>, by 
+Based on the original source code of L<HTML::Widget::Constraint::Integer>, by
 Sebastian Riedel, C<sri@oook.de>.
 
 =head1 LICENSE

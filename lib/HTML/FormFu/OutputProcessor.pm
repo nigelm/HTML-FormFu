@@ -1,13 +1,17 @@
+use strict;
+
 package HTML::FormFu::OutputProcessor;
 
+# ABSTRACT: Post-process HTML output
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 
 with 'HTML::FormFu::Role::HasParent', 'HTML::FormFu::Role::Populate';
 
 use HTML::FormFu::ObjectUtil qw( form parent );
 
-has type => ( is => 'rw', traits => ['FormFuChained'] );
+has type => ( is => 'rw', traits => ['Chained'] );
 
 sub clone {
     my ($self) = @_;
@@ -22,10 +26,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::OutputProcessor - Post-process HTML output
 
 =head1 DESCRIPTION
 

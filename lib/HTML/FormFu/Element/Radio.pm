@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Element::Radio;
+
+# ABSTRACT: Radio form field
 
 use Moose;
 
@@ -22,10 +26,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Element::Radio - Radio form field
-
 =head1 SYNOPSIS
 
     my $element = $form->element( Radio => 'foo' );
@@ -37,9 +37,9 @@ Radio form field.
 =head1 SEE ALSO
 
 Is a sub-class of, and inherits methods from
-L<HTML::FormFu::Element::Checkbox>, 
-L<HTML::FormFu::Role::Element::Input>, 
-L<HTML::FormFu::Role::Element::Field>, 
+L<HTML::FormFu::Element::Checkbox>,
+L<HTML::FormFu::Role::Element::Input>,
+L<HTML::FormFu::Role::Element::Field>,
 L<HTML::FormFu::Element>
 
 L<HTML::FormFu>

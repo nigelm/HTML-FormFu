@@ -1,25 +1,29 @@
+use strict;
+
 package HTML::FormFu::OutputProcessor::Indent;
 
+# ABSTRACT: Nicely Indent HTML Output
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::OutputProcessor';
 
 use HTML::FormFu::Constants qw( $EMPTY_STR $SPACE );
 use HTML::TokeParser::Simple;
-use List::MoreUtils qw( any );
+use List::Util 1.33 qw( any );
 
 has indent => (
     is      => 'rw',
     default => "\t",
     lazy    => 1,
-    traits  => ['FormFuChained'],
+    traits  => ['Chained'],
 );
 
 has preserve_tags => (
     is      => 'rw',
     default => sub { [qw( pre textarea )] },
     lazy    => 1,
-    traits  => ['FormFuChained'],
+    traits  => ['Chained'],
 );
 
 sub process {
@@ -98,10 +102,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::OutputProcessor::Indent - Nicely Indent HTML Output
 
 =head1 SYNOPSIS
 

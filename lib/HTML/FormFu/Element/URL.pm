@@ -1,7 +1,10 @@
+use strict;
+
 package HTML::FormFu::Element::URL;
 
+# ABSTRACT: HTML5 URL form field
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
 
 extends 'HTML::FormFu::Element';
 
@@ -9,13 +12,13 @@ with 'HTML::FormFu::Role::Element::Input';
 
 use HTML::FormFu::Attribute qw( mk_output_accessors );
 
-has http_only  => ( is => 'rw', traits => ['FormFuChained'] );
-has https_only => ( is => 'rw', traits => ['FormFuChained'] );
+has http_only  => ( is => 'rw', traits => ['Chained'] );
+has https_only => ( is => 'rw', traits => ['Chained'] );
 
 has error_message => (
     is        => 'rw',
     predicate => 'has_message',
-    traits    => ['FormFuChained'],
+    traits    => ['Chained'],
 );
 
 has _has_auto_regex_constraint => (
@@ -34,7 +37,7 @@ after BUILD => sub {
 };
 
 sub pre_process {
-    my ( $self ) = @_;
+    my ($self) = @_;
 
     my $constraint;
 
@@ -54,29 +57,25 @@ sub pre_process {
             $scheme = 'https?';
         }
 
-        $constraint = $self->constraint({
-            type => 'Regex',
-            common => [
-                'URI',
-                'HTTP',
-                { -scheme => $scheme },
-            ],
-        });
+        $constraint = $self->constraint(
+            {   type   => 'Regex',
+                common => [ 'URI', 'HTTP', { -scheme => $scheme }, ],
+            } );
 
-        $self->_has_auto_regex_constraint( $constraint );
+        $self->_has_auto_regex_constraint($constraint);
 
         # 'pattern' attribute
-        $self->pattern( "$scheme://.*" );
+        $self->pattern("$scheme://.*");
 
     }
 
     my $message = $self->error_message;
     if ( defined $message && length $message ) {
-        $constraint->message( $message );
+        $constraint->message($message);
     }
 
     return;
-};
+}
 
 __PACKAGE__->meta->make_immutable;
 
@@ -84,14 +83,10 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Element::URL - HTML5 URL form field
-
 =head1 SYNOPSIS
 
     my $element = $form->element( URL => 'foo' );
-    
+
     # no need to add a separate constraint
 
 =head1 DESCRIPTION
@@ -125,7 +120,7 @@ automatically added.
 
 Arguments: $string
 
-If you don't want your error message to be XML-escaped, use the L</message_xml> method 
+If you don't want your error message to be XML-escaped, use the L</message_xml> method
 instead of L</message>.
 
 =head2 message_loc
@@ -136,9 +131,9 @@ Set the error message using a L10N key.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
-L<HTML::FormFu::Role::Element::Input>, 
-L<HTML::FormFu::Role::Element::Field>, 
+Is a sub-class of, and inherits methods from
+L<HTML::FormFu::Role::Element::Input>,
+L<HTML::FormFu::Role::Element::Field>,
 L<HTML::FormFu::Element>.
 
 L<HTML::FormFu>

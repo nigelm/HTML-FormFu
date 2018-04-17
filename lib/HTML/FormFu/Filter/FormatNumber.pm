@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Filter::FormatNumber;
+
+# ABSTRACT: Convert a formatted number from a known locale
 
 use Moose;
 extends 'HTML::FormFu::Filter';
@@ -38,10 +42,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Filter::FormatNumber - Convert a formatted number from a known locale
-
 =head1 SYNOPSIS
 
 This filter simply does the opposite of
@@ -65,7 +65,7 @@ See L<Number::Format/unformat_number> for more details.
 
 If no locale is found, the server's locale will be used.
 
-This method is a special 'inherited accessor', which means it can be set on 
+This method is a special 'inherited accessor', which means it can be set on
 the form, a enclosing block element, the field, or this filter.
 When the value is read, if no value is defined it automatically traverses
 the element's hierarchy of parents, through any block elements and up to the

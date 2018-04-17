@@ -1,14 +1,18 @@
+use strict;
+
 package HTML::FormFu::Constraint::File::MIME;
 
+# ABSTRACT: MIME Type Constraint
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Constraint';
 
-use List::MoreUtils qw( any );
+use List::Util 1.33 qw( any );
 use Scalar::Util qw( blessed );
 
-has regex => ( is => 'rw', traits => ['FormFuChained'] );
-has types => ( is => 'rw', traits => ['FormFuChained'] );
+has regex => ( is => 'rw', traits => ['Chained'] );
+has types => ( is => 'rw', traits => ['Chained'] );
 
 sub constrain_value {
     my ( $self, $value ) = @_;
@@ -42,10 +46,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Constraint::File::MIME - MIME Type Constraint
-
 =head1 DESCRIPTION
 
 Constraint an uploaded file's MIME-type (Content-Type).
@@ -62,8 +62,8 @@ Arguments: \@mime_types
 
 Optional.
 
-Accepts a single MIME-type or an arrayref of MIME-types. Each is checked 
-against the uploaded file's MIME-type (as given by the browser), and the 
+Accepts a single MIME-type or an arrayref of MIME-types. Each is checked
+against the uploaded file's MIME-type (as given by the browser), and the
 constraint passes if any one of the given types matches.
 
 =head2 regex
@@ -72,10 +72,10 @@ Arguments: $regex
 
 Optional.
 
-Accepts a string to be interpreted as a regex, and is checked against the 
+Accepts a string to be interpreted as a regex, and is checked against the
 uploaded files's MIME-type (as given by the browser).
 
-The regex uses the C</x> flag, so that whitespace in the given string is 
+The regex uses the C</x> flag, so that whitespace in the given string is
 ignored.
 
 =head1 SEE ALSO

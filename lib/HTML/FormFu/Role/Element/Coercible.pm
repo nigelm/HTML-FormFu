@@ -1,3 +1,5 @@
+use strict;
+
 package HTML::FormFu::Role::Element::Coercible;
 
 use Moose::Role;
@@ -49,7 +51,7 @@ sub _coerce {
 
     croak "element cannot be coerced to type '$args{type}'"
         unless $element->isa( $args{package} )
-            || $element->does( $args{package} );
+        || $element->does( $args{package} );
 
     $element->value( $self->value );
 

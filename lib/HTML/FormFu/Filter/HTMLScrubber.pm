@@ -1,16 +1,20 @@
+use strict;
+
 package HTML::FormFu::Filter::HTMLScrubber;
 
+# ABSTRACT: filter removing HTML markup
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Filter';
 
 use Clone ();
 
-has allow   => ( is => 'rw', traits => ['FormFuChained'] );
-has comment => ( is => 'rw', traits => ['FormFuChained'] );
-has default => ( is => 'rw', traits => ['FormFuChained'] );
-has rules   => ( is => 'rw', traits => ['FormFuChained'] );
-has script  => ( is => 'rw', traits => ['FormFuChained'] );
+has allow   => ( is => 'rw', traits => ['Chained'] );
+has comment => ( is => 'rw', traits => ['Chained'] );
+has default => ( is => 'rw', traits => ['Chained'] );
+has rules   => ( is => 'rw', traits => ['Chained'] );
+has script  => ( is => 'rw', traits => ['Chained'] );
 
 use HTML::Scrubber;
 
@@ -47,10 +51,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Filter::HTMLScrubber - filter removing HTML markup
-
 =head1 DESCRIPTION
 
 Remove HTML markup using L<HTML::Scrubber>.
@@ -70,7 +70,7 @@ Carl Franks, C<cfranks@cpan.org>
 
 Extended by Nigel Metheringham, C<nigelm@cpan.org>
 
-Based on the original source code of L<HTML::Widget::Filter::HTMLStrip>, by 
+Based on the original source code of L<HTML::Widget::Filter::HTMLStrip>, by
 Lyo Kato, C<lyo.kato@gmail.com>
 
 =head1 LICENSE

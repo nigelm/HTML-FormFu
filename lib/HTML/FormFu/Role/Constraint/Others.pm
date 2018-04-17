@@ -1,20 +1,23 @@
+use strict;
+
 package HTML::FormFu::Role::Constraint::Others;
 
+# ABSTRACT: Base class for constraints needing others() method
+
 use Moose::Role;
-use MooseX::Attribute::FormFuChained;
 
 use HTML::FormFu::Util qw(
     DEBUG_CONSTRAINTS_OTHERS
     debug
 );
 use Clone ();
-use List::MoreUtils qw( any none );
+use List::Util 1.33 qw( any none );
 
-has others                  => ( is => 'rw', traits => ['FormFuChained'] );
-has other_siblings          => ( is => 'rw', traits => ['FormFuChained'] );
-has attach_errors_to        => ( is => 'rw', traits => ['FormFuChained'] );
-has attach_errors_to_base   => ( is => 'rw', traits => ['FormFuChained'] );
-has attach_errors_to_others => ( is => 'rw', traits => ['FormFuChained'] );
+has others                  => ( is => 'rw', traits => ['Chained'] );
+has other_siblings          => ( is => 'rw', traits => ['Chained'] );
+has attach_errors_to        => ( is => 'rw', traits => ['Chained'] );
+has attach_errors_to_base   => ( is => 'rw', traits => ['Chained'] );
+has attach_errors_to_others => ( is => 'rw', traits => ['Chained'] );
 
 sub pre_process {
     my ($self) = @_;
@@ -181,7 +184,8 @@ sub mk_errors {
         $error->parent($field);
 
         if ( !grep { $name eq $_ } @has_error ) {
-            DEBUG_CONSTRAINTS_OTHERS && debug("setting '$name' error forced(1)");
+            DEBUG_CONSTRAINTS_OTHERS
+                && debug("setting '$name' error forced(1)");
 
             $error->forced(1);
         }
@@ -208,10 +212,6 @@ around clone => sub {
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Role::Constraint::Others - Base class for constraints needing others() method
-
 =head1 METHODS
 
 =head2 others
@@ -232,7 +232,7 @@ to this block are considered siblings.
 
 =head2 attach_errors_to_base
 
-If true, any error will cause the error message to be associated with the 
+If true, any error will cause the error message to be associated with the
 field the constraint is attached to.
 
 Can be use in conjunction with L</attach_errors_to_others>.
@@ -241,7 +241,7 @@ Is ignored if L</attach_errors_to> is set.
 
 =head2 attach_errors_to_others
 
-If true, any error will cause the error message to be associated with every 
+If true, any error will cause the error message to be associated with every
 field named in L</others>.
 
 Can be use in conjunction with L</attach_errors_to_base>.
@@ -252,7 +252,7 @@ Is ignored if L</attach_errors_to> is set.
 
 Arguments: \@field_names
 
-Any error will cause the error message to be associated with every field 
+Any error will cause the error message to be associated with every field
 named in L</attach_errors_to>.
 
 Overrides L</attach_errors_to_base> and L</attach_errors_to_others>.

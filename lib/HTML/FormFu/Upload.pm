@@ -1,17 +1,21 @@
+use strict;
+
 package HTML::FormFu::Upload;
 
+# ABSTRACT: uploaded file
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 
 with 'HTML::FormFu::Role::Populate';
 
 use HTML::FormFu::ObjectUtil qw( form parent );
 use HTML::FormFu::UploadParam;
 
-has headers  => ( is => 'rw', traits => ['FormFuChained'] );
-has filename => ( is => 'rw', traits => ['FormFuChained'] );
-has size     => ( is => 'rw', traits => ['FormFuChained'] );
-has type     => ( is => 'rw', traits => ['FormFuChained'] );
+has headers  => ( is => 'rw', traits => ['Chained'] );
+has filename => ( is => 'rw', traits => ['Chained'] );
+has size     => ( is => 'rw', traits => ['Chained'] );
+has type     => ( is => 'rw', traits => ['Chained'] );
 
 sub BUILD { }
 
@@ -49,10 +53,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Upload - uploaded file
-
 =head1 DESCRIPTION
 
 An instance is created for each uploaded file.
@@ -79,7 +79,7 @@ object is associated with.
 
 =head2 form
 
-Returns the L<HTML::FormFu> object that the upload object's field is attached 
+Returns the L<HTML::FormFu> object that the upload object's field is attached
 to.
 
 =head2 populate

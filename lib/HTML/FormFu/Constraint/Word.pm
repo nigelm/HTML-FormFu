@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Constraint::Word;
+
+# ABSTRACT: Single Word Constraint
 
 use Moose;
 extends 'HTML::FormFu::Constraint::Regex';
@@ -13,13 +17,9 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Constraint::Word - Single Word Constraint
-
 =head1 DESCRIPTION
 
-Ensure the input is a single word. Which characters are considered "word 
+Ensure the input is a single word. Which characters are considered "word
 characters" will depend on the current locale.
 
 =head1 SEE ALSO

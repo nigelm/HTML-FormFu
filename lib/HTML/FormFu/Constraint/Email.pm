@@ -1,13 +1,17 @@
+use strict;
+
 package HTML::FormFu::Constraint::Email;
 
+# ABSTRACT: Email Address Constraint
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 
 extends 'HTML::FormFu::Constraint';
 
 use Email::Valid;
 
-has options => ( is => 'rw', traits => ['FormFuChained'] );
+has options => ( is => 'rw', traits => ['Chained'] );
 
 sub constrain_value {
     my ( $self, $value ) = @_;
@@ -16,33 +20,34 @@ sub constrain_value {
 
     my %options = ( -address => $value );
 
-    if (defined $self->options) {
+    if ( defined $self->options ) {
 
-       if (ref $self->options eq 'ARRAY') {
+        if ( ref $self->options eq 'ARRAY' ) {
 
-          for my $foo (@{ $self->options }) {
-              next if $foo eq 'address';
-              $options{ '-' . $foo } = 1
-          }
+            for my $foo ( @{ $self->options } ) {
+                next if $foo eq 'address';
+                $options{ '-' . $foo } = 1;
+            }
 
-       }
-       elsif (ref $self->options eq 'HASH') {
+        }
+        elsif ( ref $self->options eq 'HASH' ) {
 
-          for my $foo (keys %{ $self->options }) {
-              next if $foo eq 'address';
-              $options{ '-' . $foo } = $self->options->{$foo}
-          }
+            for my $foo ( keys %{ $self->options } ) {
+                next if $foo eq 'address';
+                $options{ '-' . $foo } = $self->options->{$foo};
+            }
 
-       }
-       else {
+        }
+        else {
 
-           $options{ '-' . $self->options } = 1
+            $options{ '-' . $self->options } = 1;
 
-       }
+        }
 
     }
 
-    my $ok = Email::Valid->address( %options );
+    my $validated_address = ( Email::Valid->address(%options) // '' );
+    my $ok                = $value eq $validated_address;
 
     return $ok;
 }
@@ -52,10 +57,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Constraint::Email - Email Address Constraint
 
 =head1 DESCRIPTION
 
@@ -74,7 +75,7 @@ Arguments: \%keypairs
 
 Options are passed to L<Email::Valid>. An array or single option is
 passd through with each option as 'true'. Using a hash instead, you
-can pass through more specific key pair options. Remeber in both
+can pass through more specific key pair options. Remember in both
 cases to omitted the leading dash that you would otherwise need if
 using L<Email::Valid> directly.
 

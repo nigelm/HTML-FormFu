@@ -1,3 +1,5 @@
+use strict;
+
 package HTML::FormFu::Exception::Inflator;
 
 use Moose;
@@ -14,11 +16,11 @@ sub inflator {
 around render_data_non_recursive => sub {
     my ( $orig, $self, $args ) = @_;
 
-    my $render = $self->$orig( {
-            stage    => $self->stage,
+    my $render = $self->$orig(
+        {   stage    => $self->stage,
             inflator => $self->inflator,
             $args ? %$args : (),
-        });
+        } );
 
     return $render;
 };

@@ -1,7 +1,11 @@
+use strict;
+
 package HTML::FormFu::Constraint::Length;
 
+# ABSTRACT: Min/Max Length String Constraint
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 use MooseX::Aliases;
 
 extends 'HTML::FormFu::Constraint';
@@ -9,13 +13,13 @@ extends 'HTML::FormFu::Constraint';
 has minimum => (
     is     => 'rw',
     alias  => 'min',
-    traits => ['FormFuChained'],
+    traits => ['Chained'],
 );
 
 has maximum => (
     is     => 'rw',
     alias  => 'max',
-    traits => ['FormFuChained'],
+    traits => ['Chained'],
 );
 
 sub constrain_value {
@@ -45,10 +49,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Constraint::Length - Min/Max Length String Constraint
 
 =head1 DESCRIPTION
 

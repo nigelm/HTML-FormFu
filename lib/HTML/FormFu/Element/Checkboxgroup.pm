@@ -1,25 +1,29 @@
+use strict;
+
 package HTML::FormFu::Element::Checkboxgroup;
 
+# ABSTRACT: Group of checkbox form fields
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Element';
 
 with 'HTML::FormFu::Role::Element::Group';
 
 use HTML::FormFu::Constants qw( $EMPTY_STR );
 use HTML::FormFu::Util qw( append_xml_attribute process_attrs );
-use List::MoreUtils qw( any );
+use List::Util 1.33 qw( any );
 
 has input_type => (
     is      => 'rw',
     default => 'checkbox',
     lazy    => 1,
-    traits  => ['FormFuChained'],
+    traits  => ['Chained'],
 );
 
 has reverse_group => (
     is     => 'rw',
-    traits => ['FormFuChained'],
+    traits => ['Chained'],
 );
 
 after BUILD => sub {
@@ -32,13 +36,7 @@ after BUILD => sub {
     $self->reverse_group(1);
     $self->input_type('checkbox');
 
-    $self->layout( [
-        'label',
-        'errors',
-        'field',
-        'comment',
-        'javascript',
-    ] );
+    $self->layout( [ 'label', 'errors', 'field', 'comment', 'javascript', ] );
 
     return;
 };
@@ -131,8 +129,8 @@ sub _prepare_attrs {
 sub render_data_non_recursive {
     my ( $self, $args ) = @_;
 
-    my $render = $self->SUPER::render_data_non_recursive( {
-            field_filename => $self->field_filename,
+    my $render = $self->SUPER::render_data_non_recursive(
+        {   field_filename => $self->field_filename,
             reverse_group  => $self->reverse_group,
             input_type     => $self->input_type,
             $args ? %$args : (),
@@ -236,10 +234,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Element::Checkboxgroup - Group of checkbox form fields
-
 =head1 SYNOPSIS
 
 YAML config:
@@ -257,8 +251,8 @@ YAML config:
 
 Convenient to use group of checkbox fields.
 
-Use the same syntax as you would to create a Select element optgroup to 
-create Checkboxgroup sub-groups, see L<HTML::FormFu::Role::Element::Group/options> 
+Use the same syntax as you would to create a Select element optgroup to
+create Checkboxgroup sub-groups, see L<HTML::FormFu::Role::Element::Group/options>
 for details.
 
 =head1 METHODS
@@ -277,8 +271,8 @@ See L<HTML::FormFu::Role::Element::Group/value_range>.
 
 =head2 auto_id
 
-In addition to the substitutions documented by L<HTML::FormFu/auto_id>, 
-C<%c> will be replaced by an incremented integer, to ensure there are 
+In addition to the substitutions documented by L<HTML::FormFu/auto_id>,
+C<%c> will be replaced by an incremented integer, to ensure there are
 no duplicated ID's, and C<%v> will be replaced by the item's value to
 allow multiple elements with the same name to coexist, and their labels
 to correctly select the appropriate item.
@@ -303,9 +297,9 @@ Default Value: C<true>
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
-L<HTML::FormFu::Role::Element::Group>, 
-L<HTML::FormFu::Role::Element::Field>, 
+Is a sub-class of, and inherits methods from
+L<HTML::FormFu::Role::Element::Group>,
+L<HTML::FormFu::Role::Element::Field>,
 L<HTML::FormFu::Element>
 
 L<HTML::FormFu>

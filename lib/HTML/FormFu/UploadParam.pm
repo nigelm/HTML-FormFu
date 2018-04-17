@@ -1,7 +1,11 @@
+use strict;
+
 package HTML::FormFu::UploadParam;
 
+# ABSTRACT: accessor class
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 
 use Carp qw( croak );
 
@@ -9,8 +13,8 @@ use File::Temp qw( tempfile );
 use Scalar::Util qw( weaken );
 use Storable qw( nfreeze thaw );
 
-has param => ( is => 'rw', traits => ['FormFuChained'], required => 1 );
-has filename => ( is => 'rw', traits => ['FormFuChained'] );
+has param => ( is => 'rw', traits => ['Chained'], required => 1 );
+has filename => ( is => 'rw', traits => ['Chained'] );
 
 sub form {
     my $self = shift;
@@ -87,10 +91,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::UploadParam - accessor class
 
 =head1 DESCRIPTION
 

@@ -1,18 +1,22 @@
+use strict;
+
 package HTML::FormFu::Inflator::CompoundDateTime;
 
+# ABSTRACT: CompoundDateTime inflator
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Inflator';
 
 use HTML::FormFu::Constants qw( $EMPTY_STR );
 use DateTime;
 use DateTime::Format::Strptime;
-use List::MoreUtils qw( none );
+use List::Util 1.33 qw( none );
 use Scalar::Util qw( reftype );
 use Carp qw( croak );
 
-has strptime    => ( is => 'rw', traits => ['FormFuChained'] );
-has field_order => ( is => 'rw', traits => ['FormFuChained'] );
+has strptime    => ( is => 'rw', traits => ['Chained'] );
+has field_order => ( is => 'rw', traits => ['Chained'] );
 
 my @known_fields = qw( year month day hour minute second nanosecond time_zone );
 
@@ -75,27 +79,23 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Inflator::CompoundDateTime - CompoundDateTime inflator
-
 =head1 SYNOPSIS
 
     ---
     element:
       - type: Multi
         name: date
-        
+
         elements:
           - name: day
           - name: month
           - name: year
-        
+
         inflator:
           - type: CompoundDateTime
 
     # get the submitted value as a DateTime object
-    
+
     my $date = $form->param_value('date');
 
 =head1 DESCRIPTION
@@ -132,20 +132,20 @@ By default, expects the field names to be any of the following:
 
 Arguments: \@order
 
-If your field names doesn't follow the convention listed above, you must 
-provide an arrayref containing the above names, in the order they correspond 
+If your field names doesn't follow the convention listed above, you must
+provide an arrayref containing the above names, in the order they correspond
 with your own fields.
 
     ---
     element:
       - type: Multi
         name: date
-        
+
         elements:
           - name: m
           - name: d
           - name: y
-        
+
         inflator:
           - type: CompoundDateTime
             field_order:
@@ -159,12 +159,12 @@ Arguments: \%args
 
 Arguments: $string
 
-Optional. Define the format that should be used if the L<DateTime> object is 
+Optional. Define the format that should be used if the L<DateTime> object is
 stringified.
 
-Accepts a hashref of arguments to be passed to 
-L<DateTime::Format::Strptime/new>. Alternatively, accepts a single string 
-argument, suitable for passing to 
+Accepts a hashref of arguments to be passed to
+L<DateTime::Format::Strptime/new>. Alternatively, accepts a single string
+argument, suitable for passing to
 C<< DateTime::Format::Strptime->new( pattern => $string ) >>.
 
     ---

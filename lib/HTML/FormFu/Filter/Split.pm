@@ -1,11 +1,15 @@
+use strict;
+
 package HTML::FormFu::Filter::Split;
 
+# ABSTRACT: filter splitting a singe value into an arrayref
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Filter';
 
-has regex => ( is => 'rw', traits => ['FormFuChained'] );
-has limit => ( is => 'rw', traits => ['FormFuChained'] );
+has regex => ( is => 'rw', traits => ['Chained'] );
+has limit => ( is => 'rw', traits => ['Chained'] );
 
 sub filter {
     my ( $self, $value ) = @_;
@@ -30,10 +34,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Filter::Split - filter splitting a singe value into an arrayref
-
 =head1 SYNOPSIS
 
     type: Split
@@ -49,7 +49,7 @@ Split a single input value into an arrayref of values.
 
 A regex object or string to be passed as the C<PATTERN> argument to C<split>.
 
-Default Value: '' (emtpy string)
+Default Value: '' (empty string)
 
 =head2 limit
 

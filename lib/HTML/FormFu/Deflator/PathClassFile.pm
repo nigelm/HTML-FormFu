@@ -1,12 +1,16 @@
+use strict;
+
 package HTML::FormFu::Deflator::PathClassFile;
 
+# ABSTRACT: Deflator for Path::Class::File objects
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Deflator';
 
-has relative => ( is => 'rw', traits => ['FormFuChained'] );
-has absolute => ( is => 'rw', traits => ['FormFuChained'] );
-has basename => ( is => 'rw', traits => ['FormFuChained'] );
+has relative => ( is => 'rw', traits => ['Chained'] );
+has absolute => ( is => 'rw', traits => ['Chained'] );
+has basename => ( is => 'rw', traits => ['Chained'] );
 
 sub deflator {
     my ( $self, $value ) = @_;
@@ -38,10 +42,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Deflator::PathClassFile - Deflator for Path::Class::File objects
-
 =head1 SYNOPSIS
 
     $form->deflator( PathClassFile => 'file' )
@@ -64,14 +64,14 @@ There are three types of deflation:
 
 =item relative
 
-Set this to 1 to deflate to a relative path. Anything else than 1 specifies the 
-directory to use as the base of relativity - otherwise the current working 
+Set this to 1 to deflate to a relative path. Anything else than 1 specifies the
+directory to use as the base of relativity - otherwise the current working
 directory will be used.
 
 =item absolute
 
-Set this to 1 to deflate to an absolute path. Anything else than 1 specifies the 
-directory to use as the base of relativity - otherwise the current working 
+Set this to 1 to deflate to an absolute path. Anything else than 1 specifies the
+directory to use as the base of relativity - otherwise the current working
 directory will be used.
 
 =item basename

@@ -1,10 +1,14 @@
+use strict;
+
 package HTML::FormFu::Constraint::CallbackOnce;
 
+# ABSTRACT: Code Callback Constraint
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Constraint';
 
-has callback => ( is => 'rw', traits => ['FormFuChained'] );
+has callback => ( is => 'rw', traits => ['Chained'] );
 
 sub process {
     my ( $self, $params ) = @_;
@@ -16,12 +20,13 @@ sub process {
 
     my $callback = $self->callback || sub {1};
 
+    ## no critic (ProhibitNoStrict);
     no strict 'refs';
 
     my $ok = eval { $callback->( $value, $params ) };
 
-    return $self->mk_errors( {
-            pass => ( $@ or !$ok ) ? 0 : 1,
+    return $self->mk_errors(
+        {   pass => ( $@ or !$ok ) ? 0 : 1,
             message => $@,
         } );
 }
@@ -32,10 +37,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Constraint::CallbackOnce - Code Callback Constraint
-
 =head1 SYNOPSIS
 
     $form->constraint({
@@ -43,7 +44,7 @@ HTML::FormFu::Constraint::CallbackOnce - Code Callback Constraint
         name => 'foo',
         callback => \&sfoo,
     );
-    
+
     sub foo {
         my ( $value, $params ) = @_;
 
@@ -52,12 +53,12 @@ HTML::FormFu::Constraint::CallbackOnce - Code Callback Constraint
 
 =head1 DESCRIPTION
 
-Unlinke the L<HTML::FormFu::Constraint::Callback>, this callback is only 
+Unlinke the L<HTML::FormFu::Constraint::Callback>, this callback is only
 called once, regardless of how many values are submitted.
 
-The first argument passed to the callback is the submitted value for the 
+The first argument passed to the callback is the submitted value for the
 associated field; this may be a single value or an arrayref of value.
-The second argument passed to the callback is a hashref of name/value pairs 
+The second argument passed to the callback is a hashref of name/value pairs
 for all input fields.
 
 This constraint doesn't honour the C<not()> value.

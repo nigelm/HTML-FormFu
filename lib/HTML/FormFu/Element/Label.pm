@@ -1,7 +1,11 @@
+use strict;
+
 package HTML::FormFu::Element::Label;
 
+# ABSTRACT: field for displaying only
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 
 extends "HTML::FormFu::Element";
 
@@ -10,15 +14,15 @@ with 'HTML::FormFu::Role::Element::Field',
     'HTML::FormFu::Role::Element::Coercible';
 
 use HTML::FormFu::Util qw( process_attrs );
-use List::MoreUtils qw( none );
+use List::Util 1.33 qw( none );
 
-has field_type => ( is => 'rw', traits => ['FormFuChained'] );
+has field_type => ( is => 'rw', traits => ['Chained'] );
 
 has tag => (
     is      => 'rw',
     default => 'span',
     lazy    => 1,
-    traits  => ['FormFuChained'],
+    traits  => ['Chained'],
 );
 
 after BUILD => sub {
@@ -75,8 +79,8 @@ sub process_input {
 sub render_data_non_recursive {
     my ( $self, $args ) = @_;
 
-    my $render = $self->SUPER::render_data_non_recursive( {
-            tag => $self->tag,
+    my $render = $self->SUPER::render_data_non_recursive(
+        {   tag => $self->tag,
             $args ? %$args : (),
         } );
 
@@ -88,10 +92,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Element::Label - field for displaying only
 
 =head1 DESCRIPTION
 
@@ -110,7 +110,7 @@ Set the tag for this element.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
+Is a sub-class of, and inherits methods from
 L<HTML::FormFu::Role::Element::Field>, L<HTML::FormFu::Element>
 
 L<HTML::FormFu>

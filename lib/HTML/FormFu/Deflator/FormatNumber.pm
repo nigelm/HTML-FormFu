@@ -1,7 +1,11 @@
+use strict;
+
 package HTML::FormFu::Deflator::FormatNumber;
 
+# ABSTRACT: Format a number for a locale
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Deflator';
 
 use Number::Format;
@@ -12,7 +16,7 @@ has precision => (
     default => 2,
     lazy    => 1,
     isa     => 'Int',
-    traits  => ['FormFuChained'],
+    traits  => ['Chained'],
 );
 
 has trailing_zeroes => (
@@ -20,7 +24,7 @@ has trailing_zeroes => (
     default => 0,
     lazy    => 1,
     isa     => 'Int',
-    traits  => ['FormFuChained'],
+    traits  => ['Chained'],
 );
 
 sub deflator {
@@ -54,10 +58,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Deflator::FormatNumber - Format a number for a locale
-
 =head1 SYNOPSIS
 
     locale: de_DE
@@ -67,7 +67,7 @@ HTML::FormFu::Deflator::FormatNumber - Format a number for a locale
         deflators:
           - type: FormatNumber
             precision: 4
-      
+
       - type: Text
         name: price
         deflators:
@@ -81,7 +81,7 @@ HTML::FormFu::Deflator::FormatNumber - Format a number for a locale
 
 If no locale is found, the server's locale will be used.
 
-This method is a special 'inherited accessor', which means it can be set on 
+This method is a special 'inherited accessor', which means it can be set on
 the form, a enclosing block element, the field, or this filter.
 When the value is read, if no value is defined it automatically traverses
 the element's hierarchy of parents, through any block elements and up to the

@@ -1,10 +1,14 @@
+use strict;
+
 package HTML::FormFu::Deflator::Strftime;
 
+# ABSTRACT: Strftime deflator
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Deflator';
 
-has strftime => ( is => 'rw', traits => ['FormFuChained'] );
+has strftime => ( is => 'rw', traits => ['Chained'] );
 
 sub deflator {
     my ( $self, $value ) = @_;
@@ -31,10 +35,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Deflator::Strftime - Strftime deflator
 
 =head1 SYNOPSIS
 

@@ -1,7 +1,11 @@
+use strict;
+
 package HTML::FormFu::Constraint::Range;
 
+# ABSTRACT: Numerical Range Constraint
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 use MooseX::Aliases;
 
 extends 'HTML::FormFu::Constraint';
@@ -11,13 +15,13 @@ use Scalar::Util qw( looks_like_number );
 has minimum => (
     is     => 'rw',
     alias  => 'min',
-    traits => ['FormFuChained'],
+    traits => ['Chained'],
 );
 
 has maximum => (
     is     => 'rw',
     alias  => 'max',
-    traits => ['FormFuChained'],
+    traits => ['Chained'],
 );
 
 sub constrain_value {
@@ -49,10 +53,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Constraint::Range - Numerical Range Constraint
 
 =head1 SYNOPSIS
 

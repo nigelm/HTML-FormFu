@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Element::Number;
+
+# ABSTRACT: Number element with formatting
 
 use Moose;
 
@@ -32,10 +36,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Element::Number - Number element with formatting
-
 =head1 SYNOPSIS
 
   ---
@@ -65,7 +65,7 @@ Set the precision for the number. Defaults to C<2>.
 
 =head2 trailing_zeroes
 
-If this is set to C<1> the number has trailing zeroes. Defaults to C<0>. 
+If this is set to C<1> the number has trailing zeroes. Defaults to C<0>.
 
 =head2 CHANGED BEHAVIOUR AS OF VERSION 0.09011
 

@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Element::Select;
+
+# ABSTRACT: Select form field
 
 use Moose;
 extends 'HTML::FormFu::Element';
@@ -7,7 +11,7 @@ with 'HTML::FormFu::Role::Element::Group';
 
 use HTML::FormFu::Constants qw( $EMPTY_STR );
 use HTML::FormFu::Util qw( append_xml_attribute process_attrs );
-use List::MoreUtils qw( any );
+use List::Util 1.33 qw( any );
 
 __PACKAGE__->mk_attr_accessors(qw( multiple size ));
 
@@ -102,10 +106,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Element::Select - Select form field
-
 =head1 SYNOPSIS
 
 YAML config:
@@ -122,7 +122,7 @@ YAML config:
 
 Select form field.
 
-Supports optgroups, see L<HTML::FormFu::Role::Element::Group/options> for 
+Supports optgroups, see L<HTML::FormFu::Role::Element::Group/options> for
 details.
 
 =head1 METHODS
@@ -149,9 +149,9 @@ See L<HTML::FormFu::Role::Element::Group/empty_first_label>.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
-L<HTML::FormFu::Role::Element::Group>, 
-L<HTML::FormFu::Role::Element::Field>, 
+Is a sub-class of, and inherits methods from
+L<HTML::FormFu::Role::Element::Group>,
+L<HTML::FormFu::Role::Element::Field>,
 L<HTML::FormFu::Element>
 
 L<HTML::FormFu>

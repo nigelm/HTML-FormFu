@@ -1,7 +1,11 @@
+use strict;
+
 package HTML::FormFu::Element::Password;
 
+# ABSTRACT: Password form field
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 
 extends 'HTML::FormFu::Element';
 
@@ -9,7 +13,7 @@ with 'HTML::FormFu::Role::Element::Input';
 
 use HTML::FormFu::Constants qw( $EMPTY_STR );
 
-has render_value => ( is => 'rw', traits => ['FormFuChained'] );
+has render_value => ( is => 'rw', traits => ['Chained'] );
 
 after BUILD => sub {
     my $self = shift;
@@ -53,10 +57,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Element::Password - Password form field
-
 =head1 SYNOPSIS
 
     my $element = $form->element( Password => 'foo' );
@@ -78,9 +78,9 @@ Default value: false
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
-L<HTML::FormFu::Role::Element::Input>, 
-L<HTML::FormFu::Role::Element::Field>, 
+Is a sub-class of, and inherits methods from
+L<HTML::FormFu::Role::Element::Input>,
+L<HTML::FormFu::Role::Element::Field>,
 L<HTML::FormFu::Element>
 
 L<HTML::FormFu>

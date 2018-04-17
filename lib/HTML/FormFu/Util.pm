@@ -1,6 +1,7 @@
+use strict;
+
 package HTML::FormFu::Util;
 
-use strict;
 use warnings;
 
 use HTML::FormFu::Constants qw( $SPACE );
@@ -77,7 +78,7 @@ sub debug {
 
     my ( undef, undef, undef, $sub ) = caller(1);
 
-    require 'Data/Dumper.pm';
+    require Data::Dumper;
 
     warn "\n" if $sub ne $LAST_SUB;
 
@@ -327,7 +328,7 @@ sub _remove_subs {
             string => sub {
                 my $x = "$_[0]";
                 my $y = xml_escape("$_[1]");
-                $x        =~ s/^\Q$y\E ?//
+                $x =~ s/^\Q$y\E ?//
                     || $x =~ s/ \Q$y\E / /
                     || $x =~ s/ ?\Q$y\E$//;
                 return literal($x);
@@ -335,7 +336,7 @@ sub _remove_subs {
             literal => sub {
                 my $x = "$_[0]";
                 my $y = "$_[1]";
-                $x        =~ s/^\Q$y\E ?//
+                $x =~ s/^\Q$y\E ?//
                     || $x =~ s/ \Q$y\E / /
                     || $x =~ s/ ?\Q$y\E$//;
                 return literal($x);
@@ -344,7 +345,7 @@ sub _remove_subs {
         string => {
             string => sub {
                 my ( $x, $y ) = @_;
-                $x        =~ s/^\Q$y\E ?//
+                $x =~ s/^\Q$y\E ?//
                     || $x =~ s/ \Q$y\E / /
                     || $x =~ s/ ?\Q$y\E$//;
                 return $x;
@@ -352,7 +353,7 @@ sub _remove_subs {
             literal => sub {
                 my $x = xml_escape( $_[0] );
                 my $y = "$_[1]";
-                $x        =~ s/^\Q$y\E ?//
+                $x =~ s/^\Q$y\E ?//
                     || $x =~ s/ \Q$y\E / /
                     || $x =~ s/ ?\Q$y\E$//;
                 return literal($x);
@@ -397,7 +398,7 @@ sub require_class {
 sub xml_escape {
     my $val = shift;
 
-    return undef if !defined $val;
+    return undef if !defined $val;   ## no critic (ProhibitExplicitReturnUndef);
 
     if ( ref $val eq 'HASH' ) {
         my %val = %$val;

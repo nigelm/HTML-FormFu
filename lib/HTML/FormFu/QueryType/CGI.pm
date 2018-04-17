@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::QueryType::CGI;
+
+# ABSTRACT: uploaded file
 
 use Moose;
 
@@ -10,10 +14,10 @@ use Scalar::Util qw( blessed );
 sub parse_uploads {
     my ( $class, $form, $name ) = @_;
 
-    my $query  = $form->query;
+    my $query = $form->query;
     ## CGI wants you to use $query->multi_param($foo).
     ## doing so breaks CGI::Simple. So shoosh it up for now.
-    local $CGI::LIST_CONTEXT_WARN = 0; 
+    local $CGI::LIST_CONTEXT_WARN = 0;
 
     my @params = $query->param($name);
     my @new;
@@ -22,8 +26,8 @@ sub parse_uploads {
         if ( blessed $param ) {
             my $filename = $param;
 
-            $param = $class->new( {
-                    _param   => $param,
+            $param = $class->new(
+                {   _param   => $param,
                     filename => sprintf( "%s", $filename ),
                     parent   => $form,
 
@@ -61,10 +65,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::QueryType::CGI - uploaded file
-
 =head1 METHODS
 
 =head2 headers
@@ -98,7 +98,7 @@ Returns the browser-submitted Content-Type of the uploaded file.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
+Is a sub-class of, and inherits methods from
 L<HTML::FormFu::Upload>
 
 L<HTML::FormFu>, L<HTML::FormFu::Element::File>

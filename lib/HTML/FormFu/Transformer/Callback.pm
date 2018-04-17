@@ -1,16 +1,21 @@
+use strict;
+
 package HTML::FormFu::Transformer::Callback;
 
+# ABSTRACT: Callback transformer
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Transformer';
 
-has callback => ( is => 'rw', traits => ['FormFuChained'] );
+has callback => ( is => 'rw', traits => ['Chained'] );
 
 sub transformer {
     my ( $self, $value, $params ) = @_;
 
     my $callback = $self->callback || sub {1};
 
+    ## no critic (ProhibitNoStrict);
     no strict 'refs';
 
     my $return = $callback->( $value, $params );
@@ -23,10 +28,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Transformer::Callback - Callback transformer
 
 =head1 SYNOPSIS
 
@@ -42,8 +43,8 @@ HTML::FormFu::Transformer::Callback - Callback transformer
 
 =head1 DESCRIPTION
 
-The first argument passed to the callback is the submitted value for the 
-associated field. The second argument passed to the callback is a hashref of 
+The first argument passed to the callback is the submitted value for the
+associated field. The second argument passed to the callback is a hashref of
 name/value pairs for all input fields.
 
 =head1 METHODS

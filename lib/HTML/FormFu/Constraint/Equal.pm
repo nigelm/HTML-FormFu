@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Constraint::Equal;
+
+# ABSTRACT: Multi-field Equality Constraint
 
 use Moose;
 extends 'HTML::FormFu::Constraint';
@@ -9,7 +13,7 @@ use HTML::FormFu::Util qw(
     DEBUG_CONSTRAINTS
     debug
 );
-use List::MoreUtils qw( all );
+use List::Util 1.33 qw( all );
 
 our $EMPTY_STR = q{};
 
@@ -63,8 +67,8 @@ sub process {
         return;
     }
 
-    return $self->mk_errors( {
-            pass => @failed ? 0 : 1,
+    return $self->mk_errors(
+        {   pass   => @failed ? 0 : 1,
             failed => \@failed,
             names  => [ $self->nested_name, @names ],
         } );
@@ -115,10 +119,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Constraint::Equal - Multi-field Equality Constraint
-
 =head1 SYNOPSIS
 
     - type: Password
@@ -131,12 +131,12 @@ HTML::FormFu::Constraint::Equal - Multi-field Equality Constraint
 
 =head1 DESCRIPTION
 
-All fields named in L<HTML::FormFu::Role::Constraint::Others/others> must have an equal value to the field this 
+All fields named in L<HTML::FormFu::Role::Constraint::Others/others> must have an equal value to the field this
 constraint is attached to.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from  
+Is a sub-class of, and inherits methods from
 L<HTML::FormFu::Role::Constraint::Others>, L<HTML::FormFu::Constraint>
 
 L<HTML::FormFu>

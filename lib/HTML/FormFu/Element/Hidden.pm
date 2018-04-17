@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Element::Hidden;
+
+# ABSTRACT: Hidden form field
 
 use Moose;
 
@@ -12,9 +16,7 @@ after BUILD => sub {
     $self->field_type('hidden');
     $self->container_tag(undef);
 
-    $self->layout( [
-        'field',
-    ] );
+    $self->layout( [ 'field', ] );
 
     return;
 };
@@ -24,10 +26,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Element::Hidden - Hidden form field
 
 =head1 SYNOPSIS
 
@@ -41,9 +39,9 @@ Hidden form field.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
-L<HTML::FormFu::Role::Element::Input>, 
-L<HTML::FormFu::Role::Element::Field>, 
+Is a sub-class of, and inherits methods from
+L<HTML::FormFu::Role::Element::Input>,
+L<HTML::FormFu::Role::Element::Field>,
 L<HTML::FormFu::Element>
 
 L<HTML::FormFu>

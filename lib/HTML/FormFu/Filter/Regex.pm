@@ -1,14 +1,18 @@
+use strict;
+
 package HTML::FormFu::Filter::Regex;
 
+# ABSTRACT: regexp-based match/replace filter
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Filter';
 
 use HTML::FormFu::Constants qw( $EMPTY_STR );
 
-has match   => ( is => 'rw', traits => ['FormFuChained'] );
-has replace => ( is => 'rw', traits => ['FormFuChained'] );
-has eval    => ( is => 'rw', traits => ['FormFuChained'] );
+has match   => ( is => 'rw', traits => ['Chained'] );
+has replace => ( is => 'rw', traits => ['Chained'] );
+has eval    => ( is => 'rw', traits => ['Chained'] );
 
 sub filter {
     my ( $self, $value ) = @_;
@@ -34,10 +38,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Filter::Regex - regexp-based match/replace filter
-
 =head1 SYNOPSIS
 
 The following filter would turn C<1234-5678> into C<****-****>.
@@ -54,14 +54,14 @@ Regular expression-based match / replace filter.
 
 =head2 match
 
-A regex object or string to be used in the "left-hand side" of a C<s///g> 
+A regex object or string to be used in the "left-hand side" of a C<s///g>
 regular expression.
 
 Default Value: qr/./
 
 =head2 replace
 
-A string to be used in the "right-hand side" of a C<s///g> regular 
+A string to be used in the "right-hand side" of a C<s///g> regular
 expression. The string will replace every occurrence of L</match>.
 
 Default Value: ''

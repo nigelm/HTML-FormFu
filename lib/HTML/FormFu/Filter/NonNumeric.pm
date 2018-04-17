@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Filter::NonNumeric;
+
+# ABSTRACT: filter removing all non-numeric characters
 
 use Moose;
 extends 'HTML::FormFu::Filter::Regex';
@@ -10,10 +14,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Filter::NonNumeric - filter removing all non-numeric characters
 
 =head1 DESCRIPTION
 

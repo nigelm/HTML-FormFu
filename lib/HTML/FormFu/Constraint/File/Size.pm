@@ -1,7 +1,11 @@
+use strict;
+
 package HTML::FormFu::Constraint::File::Size;
 
+# ABSTRACT: File Size Constraint
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 use MooseX::Aliases;
 
 extends 'HTML::FormFu::Constraint';
@@ -12,13 +16,13 @@ use Scalar::Util qw( blessed );
 has minimum => (
     is     => 'rw',
     alias  => 'min',
-    traits => ['FormFuChained'],
+    traits => ['Chained'],
 );
 
 has maximum => (
     is     => 'rw',
     alias  => 'max',
-    traits => ['FormFuChained'],
+    traits => ['Chained'],
 );
 
 *min_kilobyte = \&minimum_kilobyte;
@@ -96,10 +100,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Constraint::File::Size - File Size Constraint
 
 =head1 DESCRIPTION
 

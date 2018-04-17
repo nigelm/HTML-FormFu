@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Element::Checkbox;
+
+# ABSTRACT: Checkbox form field
 
 use Moose;
 
@@ -16,10 +20,7 @@ after BUILD => sub {
     $self->field_type('checkbox');
     $self->value(1);
 
-    $self->multi_layout( [
-        'field',
-        'label',
-    ] );
+    $self->multi_layout( [ 'field', 'label', ] );
 
     return;
 };
@@ -45,7 +46,7 @@ sub prepare_attrs {
         ? $self->get_nested_hash_value( $form->input, $self->nested_name )
         : undef;
 
-    if (defined $value and ref $value eq 'ARRAY') {
+    if ( defined $value and ref $value eq 'ARRAY' ) {
         $value = $original if grep { $_ eq $original } @$value;
     }
 
@@ -80,10 +81,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Element::Checkbox - Checkbox form field
-
 =head1 SYNOPSIS
 
     my $e = $form->element( Checkbox => 'foo' );
@@ -104,15 +101,15 @@ Inherited. See L<HTML::FormFu::Role::Element::Field/default_empty_value> for det
 
 =head2 multi_layout
 
-Overrides the default value of 
+Overrides the default value of
 L<multi_layout|HTML::FormFu::Role::Element::Field/multi_layout>
 to swap the C<field> and C<label> around.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
-L<HTML::FormFu::Role::Element::Input>, 
-L<HTML::FormFu::Role::Element::Field>, 
+Is a sub-class of, and inherits methods from
+L<HTML::FormFu::Role::Element::Input>,
+L<HTML::FormFu::Role::Element::Field>,
 L<HTML::FormFu::Element>
 
 L<HTML::FormFu>

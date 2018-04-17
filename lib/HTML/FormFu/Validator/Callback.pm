@@ -1,19 +1,24 @@
+use strict;
+
 package HTML::FormFu::Validator::Callback;
 
+# ABSTRACT: Callback validator
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Validator';
 
-has callback => ( is => 'rw', traits => ['FormFuChained'] );
+has callback => ( is => 'rw', traits => ['Chained'] );
 
 sub validate_value {
-    my ( $self, $value ) = @_;
+    my ( $self, $value, $params ) = @_;
 
     my $callback = $self->callback || sub {1};
 
+    ## no critic (ProhibitNoStrict);
     no strict 'refs';
 
-    my $ok = $callback->($value);
+    my $ok = $callback->( $value, $params );
 
     return $ok;
 }
@@ -23,10 +28,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Validator::Callback - Callback validator
 
 =head1 SYNOPSIS
 
@@ -43,6 +44,10 @@ HTML::FormFu::Validator::Callback - Callback validator
 =head1 DESCRIPTION
 
 Callback validator.
+
+The first argument passed to the callback is the submitted value for the
+associated field. The second argument passed to the callback is a hashref of
+name/value pairs for all input fields.
 
 =head1 METHODS
 

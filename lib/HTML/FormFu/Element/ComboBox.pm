@@ -1,13 +1,17 @@
+use strict;
+
 package HTML::FormFu::Element::ComboBox;
 
+# ABSTRACT: Select / Text hybrid
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Element::Multi';
 
 with 'HTML::FormFu::Role::Element::ProcessOptionsFromModel';
 
 use HTML::FormFu::Util qw( _filter_components _parse_args );
-use List::MoreUtils qw( any );
+use List::Util 1.33 qw( any );
 use Moose::Util qw( apply_all_roles );
 
 our @DEFER_TO_SELECT = qw(
@@ -18,11 +22,11 @@ our @DEFER_TO_SELECT = qw(
 );
 
 for my $name (@DEFER_TO_SELECT) {
-    has $name => ( is => 'rw', traits => ['FormFuChained'] );
+    has $name => ( is => 'rw', traits => ['Chained'] );
 }
 
-has select => ( is => 'rw', traits => ['FormFuChained'], default => sub { {} } );
-has text   => ( is => 'rw', traits => ['FormFuChained'], default => sub { {} } );
+has select => ( is => 'rw', traits => ['Chained'], default => sub { {} } );
+has text   => ( is => 'rw', traits => ['Chained'], default => sub { {} } );
 
 *default = \&value;
 
@@ -47,6 +51,7 @@ for my $method ( qw(
 
     my $name = __PACKAGE__ . "::get_${method}s";
 
+    ## no critic (ProhibitNoStrict);
     no strict 'refs';
 
     *{$name} = $sub;
@@ -154,8 +159,8 @@ sub _add_select {
 
     my $select_name = _build_field_name( $self, 'select' );
 
-    my $select_element = $self->element( {
-            type => 'Select',
+    my $select_element = $self->element(
+        {   type => 'Select',
             name => $select_name,
         } );
 
@@ -189,8 +194,8 @@ sub _add_text {
 
     my $text_name = _build_field_name( $self, 'text' );
 
-    my $text_element = $self->element( {
-            type => 'Text',
+    my $text_element = $self->element(
+        {   type => 'Text',
             name => $text_name,
         } );
 
@@ -260,8 +265,8 @@ sub process_input {
         );
     }
     elsif ( defined $select_value && length $select_value ) {
-        $self->set_nested_hash_value( $input, $self->nested_name, $select_value,
-        );
+        $self->set_nested_hash_value( $input, $self->nested_name,
+            $select_value, );
     }
 
     return $self->SUPER::process_input($input);
@@ -274,8 +279,8 @@ sub render_data {
 sub render_data_non_recursive {
     my ( $self, $args ) = @_;
 
-    my $render = $self->SUPER::render_data_non_recursive( {
-            elements => [ map { $_->render_data } @{ $self->_elements } ],
+    my $render = $self->SUPER::render_data_non_recursive(
+        {   elements => [ map { $_->render_data } @{ $self->_elements } ],
             $args ? %$args : (),
         } );
 
@@ -287,10 +292,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Element::ComboBox - Select / Text hybrid
 
 =head1 SYNOPSIS
 
@@ -310,7 +311,7 @@ Creates a L<multi|HTML::FormFu::Element::Multi> element containing a Select
 field and a Text field.
 
 A ComboBox element named C<foo> would result in a Select menu named
-C<foo_select> and a Text field named C<foo_text>. The names can instead be 
+C<foo_select> and a Text field named C<foo_text>. The names can instead be
 overridden by the C<name> value in L</select> and L</text>.
 
 If a value is submitted for the Text field, this will be used in preference
@@ -369,27 +370,27 @@ Override the auto-generated name of the select menu.
 
 =head1 CAVEATS
 
-Although this element inherits from L<HTML::FormFu::Element::Block>, its 
-behaviour for the methods 
+Although this element inherits from L<HTML::FormFu::Element::Block>, its
+behaviour for the methods
 L<filterE<sol>filters|HTML::FormFu/filters>,
 L<constraintE<sol>constraints|HTML::FormFu/constraints>,
 L<inflatorE<sol>inflators|HTML::FormFu/inflators>,
 L<validatorE<sol>validators|HTML::FormFu/validators> and
 L<transformerE<sol>transformers|HTML::FormFu/transformers> is more like that of
-a L<field element|HTML::FormFu::Role::Element::Field>, meaning all processors are 
+a L<field element|HTML::FormFu::Role::Element::Field>, meaning all processors are
 added directly to the date element, not to its child elements.
 
-This element's L<get_elements|HTML::FormFu/get_elements> and 
-L<get_all_elements|HTML::FormFu/get_all_elements> are inherited from 
-L<HTML::FormFu::Element::Block>, and so have the same behaviour. However, it 
+This element's L<get_elements|HTML::FormFu/get_elements> and
+L<get_all_elements|HTML::FormFu/get_all_elements> are inherited from
+L<HTML::FormFu::Element::Block>, and so have the same behaviour. However, it
 overrides the C<get_fields|HTML::FormFu/get_fields> method, such that it
 returns both itself and its child elements.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
-L<HTML::FormFu::Element::Multi>, 
-L<HTML::FormFu::Element::Block>, 
+Is a sub-class of, and inherits methods from
+L<HTML::FormFu::Element::Multi>,
+L<HTML::FormFu::Element::Block>,
 L<HTML::FormFu::Element>
 
 L<HTML::FormFu>

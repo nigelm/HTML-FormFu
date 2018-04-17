@@ -1,11 +1,14 @@
+use strict;
+
 package HTML::FormFu::Element::DateTime;
 
+# ABSTRACT: Date / Time combo field
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Element::Date';
 
 use Moose::Util qw( apply_all_roles );
-use Scalar::Util qw( blessed );
 
 __PACKAGE__->mk_attrs(qw/ hour minute second /);
 
@@ -19,7 +22,7 @@ for my $name ( qw(
         is      => 'rw',
         default => '%02d',
         lazy    => 1,
-        traits  => ['FormFuChained'],
+        traits  => ['Chained'],
     );
 }
 
@@ -66,8 +69,8 @@ sub _add_hour {
 
     @hour_prefix = map { [ '', $_ ] } @hour_prefix;
 
-    my $element = $self->element( {
-            type    => 'Select',
+    my $element = $self->element(
+        {   type    => 'Select',
             name    => $hour_name,
             options => [
                 @hour_prefix,
@@ -108,8 +111,8 @@ sub _add_minute {
 
     my @minutes = $self->_build_number_list( 0, 59, $minute->{interval} );
 
-    my $element = $self->element( {
-            type    => 'Select',
+    my $element = $self->element(
+        {   type    => 'Select',
             name    => $minute_name,
             options => [
                 @minute_prefix,
@@ -150,8 +153,8 @@ sub _add_second {
 
     my @seconds = $self->_build_number_list( 0, 59, $second->{interval} );
 
-    my $element = $self->element( {
-            type    => 'Select',
+    my $element = $self->element(
+        {   type    => 'Select',
             name    => $second_name,
             options => [
                 @second_prefix,
@@ -174,10 +177,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Element::DateTime - Date / Time combo field
 
 =head1 SYNOPSIS
 
@@ -216,10 +215,10 @@ Arguments: $value
 
 Arguments: \@values
 
-A string or arrayref of strings to be inserted into the start of the select 
+A string or arrayref of strings to be inserted into the start of the select
 menu.
 
-Each value is only used as the label for a select item - the value for each 
+Each value is only used as the label for a select item - the value for each
 of these items is always the empty string C<''>.
 
 =head3 prefix_loc
@@ -256,10 +255,10 @@ Arguments: $value
 
 Arguments: \@values
 
-A string or arrayref of strings to be inserted into the start of the select 
+A string or arrayref of strings to be inserted into the start of the select
 menu.
 
-Each value is only used as the label for a select item - the value for each 
+Each value is only used as the label for a select item - the value for each
 of these items is always the empty string C<''>.
 
 =head3 prefix_loc
@@ -296,10 +295,10 @@ Arguments: $value
 
 Arguments: \@values
 
-A string or arrayref of strings to be inserted into the start of the select 
+A string or arrayref of strings to be inserted into the start of the select
 menu.
 
-Each value is only used as the label for a select item - the value for each 
+Each value is only used as the label for a select item - the value for each
 of these items is always the empty string C<''>.
 
 =head3 prefix_loc
@@ -344,9 +343,9 @@ See L<HTML::FormFu::Element::Date/CAVEATS>
 
 Is a sub-class of, and inherits methods from
 L<HTML::FormFu::Element::Date>
-L<HTML::FormFu::Role::Element::Field>, 
-L<HTML::FormFu::Element::Multi>, 
-L<HTML::FormFu::Element::Block>, 
+L<HTML::FormFu::Role::Element::Field>,
+L<HTML::FormFu::Element::Multi>,
+L<HTML::FormFu::Element::Block>,
 L<HTML::FormFu::Element>
 
 L<HTML::FormFu>

@@ -1,3 +1,5 @@
+use strict;
+
 package HTML::FormFu::Role::Render;
 
 use HTML::FormFu::Util qw( process_attrs );
@@ -55,7 +57,7 @@ sub tt {
 
     $tt_module = $ENV{HTML_FORMFU_TT_MODULE}
         if defined $ENV{HTML_FORMFU_TT_MODULE}
-            && length $ENV{HTML_FORMFU_TT_MODULE};
+        && length $ENV{HTML_FORMFU_TT_MODULE};
 
     my $class = $tt_module;
     $class =~ s|::|/|g;
@@ -85,7 +87,7 @@ $error
 The template files should have been installed somewhere in \@INC as part of
 the installation process.
 If you're using Catalyst, see Catalyst::Helper::HTML::FormFu.
-Alternatively, you can create a local copy of the files by running 
+Alternatively, you can create a local copy of the files by running
     `html_formfu_deploy.pl`.
 Then set \$form->tt_args->{INCLUDE_PATH} to point to the template directory.
 ERROR_MESSAGE
@@ -106,8 +108,8 @@ sub _share_dir {
     return if $SHARE_ERROR;
 
     eval {
-        require 'File/ShareDir.pm';
-        require 'File/Spec.pm';
+        require File::ShareDir;
+        require File::Spec;
 
         # dist_dir() doesn't reliably return the directory our files are in.
         # find the path of one of our files, then get the directory from that

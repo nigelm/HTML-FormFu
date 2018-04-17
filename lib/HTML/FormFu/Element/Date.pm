@@ -1,7 +1,11 @@
+use strict;
+
 package HTML::FormFu::Element::Date;
 
+# ABSTRACT: 3 select menu multi-field
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 
 extends 'HTML::FormFu::Element::Multi';
 
@@ -12,17 +16,17 @@ use DateTime::Format::Natural;
 use DateTime::Locale;
 use Moose::Util qw( apply_all_roles );
 use Scalar::Util qw( blessed );
-use List::MoreUtils qw( all none uniq );
+use List::Util 1.45 qw( all none uniq );
 use Carp qw( croak );
 
 __PACKAGE__->mk_attrs(qw( day  month  year ));
 
-has auto_inflate          => ( is => 'rw', traits => ['FormFuChained'] );
-has default_natural       => ( is => 'rw', traits => ['FormFuChained'] );
-has default_datetime_args => ( is => 'rw', traits => ['FormFuChained'] );
-has printf_day            => ( is => 'rw', traits => ['FormFuChained'] );
-has printf_month          => ( is => 'rw', traits => ['FormFuChained'] );
-has printf_year           => ( is => 'rw', traits => ['FormFuChained'] );
+has auto_inflate          => ( is => 'rw', traits => ['Chained'] );
+has default_natural       => ( is => 'rw', traits => ['Chained'] );
+has default_datetime_args => ( is => 'rw', traits => ['Chained'] );
+has printf_day            => ( is => 'rw', traits => ['Chained'] );
+has printf_month          => ( is => 'rw', traits => ['Chained'] );
+has printf_year           => ( is => 'rw', traits => ['Chained'] );
 
 has _known_fields => ( is => 'rw' );
 
@@ -30,7 +34,7 @@ has strftime => (
     is      => 'rw',
     default => '%d-%m-%Y',
     lazy    => 1,
-    traits  => ['FormFuChained'],
+    traits  => ['Chained'],
 );
 
 *default = \&value;
@@ -56,6 +60,7 @@ for my $method ( qw(
 
     my $name = __PACKAGE__ . "::get_${method}s";
 
+    ## no critic (ProhibitNoStrict);
     no strict 'refs';
 
     *{$name} = $sub;
@@ -76,8 +81,8 @@ after BUILD => sub {
 
     $self->month( { prefix => [], } );
 
-    $self->year( {
-            prefix  => [],
+    $self->year(
+        {   prefix  => [],
             less    => 0,
             plus    => 10,
             reverse => 0,
@@ -222,8 +227,8 @@ sub _add_day {
 
     @day_prefix = map { [ '', $_ ] } @day_prefix;
 
-    my $element = $self->element( {
-            type       => 'Select',
+    my $element = $self->element(
+        {   type       => 'Select',
             name       => $day_name,
             options    => [ @day_prefix, map { [ $_, $_ ] } 1 .. 31 ],
             attributes => $day->{attributes},
@@ -261,8 +266,8 @@ sub _add_month {
 
     my $options = [ @month_prefix, map { [ $_ + 1, $months[$_] ] } 0 .. 11 ];
 
-    my $element = $self->element( {
-            type       => 'Select',
+    my $element = $self->element(
+        {   type       => 'Select',
             name       => $month_name,
             options    => $options,
             attributes => $month->{attributes},
@@ -310,8 +315,8 @@ sub _add_year {
 
     @year_prefix = map { [ '', $_ ] } @year_prefix;
 
-    my $element = $self->element( {
-            type       => 'Select',
+    my $element = $self->element(
+        {   type       => 'Select',
             name       => $year_name,
             options    => [ @year_prefix, map { [ $_, $_ ] } @years ],
             attributes => $year->{attributes},
@@ -387,8 +392,8 @@ sub _build_name {
 sub _add_inflator {
     my ($self) = @_;
 
-    $self->inflator( {
-            type     => "DateTime",
+    $self->inflator(
+        {   type     => "DateTime",
             parser   => { strptime => $self->strftime, },
             strptime => $self->strftime,
         } );
@@ -475,8 +480,8 @@ sub render_data {
 sub render_data_non_recursive {
     my ( $self, $args ) = @_;
 
-    my $render = $self->SUPER::render_data_non_recursive( {
-            elements => [ map { $_->render_data } @{ $self->_elements } ],
+    my $render = $self->SUPER::render_data_non_recursive(
+        {   elements => [ map { $_->render_data } @{ $self->_elements } ],
             $args ? %$args : (),
         } );
 
@@ -488,10 +493,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Element::Date - 3 select menu multi-field
 
 =head1 SYNOPSIS
 
@@ -513,15 +514,15 @@ HTML::FormFu::Element::Date - 3 select menu multi-field
 
 =head1 DESCRIPTION
 
-Creates a L<multi|HTML::FormFu::Element::Multi> element containing 3 select 
+Creates a L<multi|HTML::FormFu::Element::Multi> element containing 3 select
 menus for the day, month and year.
 
-A date element named C<foo> would result in 3 select menus with the names 
-C<foo_day>, C<foo_month> and C<foo_year>. The names can instead be 
+A date element named C<foo> would result in 3 select menus with the names
+C<foo_day>, C<foo_month> and C<foo_year>. The names can instead be
 overridden by the C<name> value in L</day>, L</month> and L</year>.
 
-This element automatically merges the input parameters from the select 
-menu into a single date parameter (and doesn't delete the individual menu's 
+This element automatically merges the input parameters from the select
+menu into a single date parameter (and doesn't delete the individual menu's
 parameters).
 
 =head1 METHODS
@@ -532,8 +533,8 @@ Arguments: DateTime object
 
 Arguments: $date_string
 
-Accepts either a L<DateTime> object, or a string containing a date, matching 
-the L</strftime> format. Overwrites any default value set in L</day>, 
+Accepts either a L<DateTime> object, or a string containing a date, matching
+the L</strftime> format. Overwrites any default value set in L</day>,
 L</month> or L</year>.
 
 =head2 default_natural
@@ -561,12 +562,12 @@ are set from it.
 
 Default Value: "%d-%m-%Y"
 
-The format of the date as returned by L<HTML::FormFu/params>, if 
+The format of the date as returned by L<HTML::FormFu/params>, if
 L</auto_inflate> is not set.
 
-If L</auto_inflate> is used, this is still the format that the parameter 
-will be in prior to the DateTime inflator being run; which is 
-what any L<Filters|HTML::FormFu::Filter> and 
+If L</auto_inflate> is used, this is still the format that the parameter
+will be in prior to the DateTime inflator being run; which is
+what any L<Filters|HTML::FormFu::Filter> and
 L<Constraints|HTML::FormFu::Constraint> will receive.
 
 =head2 day
@@ -589,10 +590,10 @@ Arguments: $value
 
 Arguments: \@values
 
-A string or arrayref of strings to be inserted into the start of the select 
+A string or arrayref of strings to be inserted into the start of the select
 menu.
 
-Each value is only used as the label for a select item - the value for each 
+Each value is only used as the label for a select item - the value for each
 of these items is always the empty string C<''>.
 
 =head3 prefix_loc
@@ -629,10 +630,10 @@ Arguments: $value
 
 Arguments: \@values
 
-A string or arrayref of strings to be inserted into the start of the select 
+A string or arrayref of strings to be inserted into the start of the select
 menu.
 
-Each value is only used as the label for a select item - the value for each 
+Each value is only used as the label for a select item - the value for each
 of these items is always the empty string C<''>.
 
 =head3 prefix_loc
@@ -655,15 +656,15 @@ Arguments: \@months
 
 A list of month names used for the month menu.
 
-If not set, the list of month names is obtained from L<DateTime::Locale> 
+If not set, the list of month names is obtained from L<DateTime::Locale>
 using the locale set in L<HTML::FormFu/languages>.
 
 =head3 short_names
 
 Argument: bool
 
-If true (and C<months> is not set) the list of abbreviated month names is 
-obtained from L<DateTime::Locale> using the locale set in 
+If true (and C<months> is not set) the list of abbreviated month names is
+obtained from L<DateTime::Locale> using the locale set in
 L<HTML::FormFu/languages>.
 
 =head2 year
@@ -686,10 +687,10 @@ Arguments: $value
 
 Arguments: \@values
 
-A string or arrayref of strings to be inserted into the start of the select 
+A string or arrayref of strings to be inserted into the start of the select
 menu.
 
-Each value is only used as the label for a select item - the value for each 
+Each value is only used as the label for a select item - the value for each
 of these items is always the empty string C<''>.
 
 =head3 prefix_loc
@@ -720,7 +721,7 @@ Arguments: $year
 
 Default Value: the current year, calculated from L<time()|perlfunc/time()>
 
-If C<list> is not set, the list is created from the range of 
+If C<list> is not set, the list is created from the range of
 C<reference - year_less> to C<reference + year_plus>.
 
 =head3 less
@@ -755,39 +756,39 @@ Not all 3 fields are required. No single field can be used more than once.
 
 =head2 auto_inflate
 
-If true, a L<DateTime Inflator|HTML::FormFu::Inflator::DateTime> will 
-automatically be added to the element, and it will be given a formatter so 
+If true, a L<DateTime Inflator|HTML::FormFu::Inflator::DateTime> will
+automatically be added to the element, and it will be given a formatter so
 that stringification will result in the format specified in L</strftime>.
 
-If you require the DateTime Inflator to have a different stringification 
-format to the format used internally by your Filters and Constraints, then 
-you must explicitly add your own DateTime Inflator, rather than using 
+If you require the DateTime Inflator to have a different stringification
+format to the format used internally by your Filters and Constraints, then
+you must explicitly add your own DateTime Inflator, rather than using
 L</auto_inflate>.
 
 =head1 CAVEATS
 
-Although this element inherits from L<HTML::FormFu::Element::Block>, its 
-behaviour for the methods 
+Although this element inherits from L<HTML::FormFu::Element::Block>, its
+behaviour for the methods
 L<filterE<sol>filters|HTML::FormFu/filters>,
 L<constraintE<sol>constraints|HTML::FormFu/constraints>,
 L<inflatorE<sol>inflators|HTML::FormFu/inflators>,
 L<validatorE<sol>validators|HTML::FormFu/validators> and
 L<transformerE<sol>transformers|HTML::FormFu/transformers> is more like that of
-a L<field element|HTML::FormFu::Role::Element::Field>, meaning all processors are 
+a L<field element|HTML::FormFu::Role::Element::Field>, meaning all processors are
 added directly to the date element, not to its select-menu child elements.
 
-This element's L<get_elements|HTML::FormFu/get_elements> and 
-L<get_all_elements|HTML::FormFu/get_all_elements> are inherited from 
-L<HTML::FormFu::Element::Block>, and so have the same behaviour. However, it 
+This element's L<get_elements|HTML::FormFu/get_elements> and
+L<get_all_elements|HTML::FormFu/get_all_elements> are inherited from
+L<HTML::FormFu::Element::Block>, and so have the same behaviour. However, it
 overrides the C<get_fields|HTML::FormFu/get_fields> method, such that it
 returns both itself and its child elements.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
-L<HTML::FormFu::Role::Element::Field>, 
-L<HTML::FormFu::Element::Multi>, 
-L<HTML::FormFu::Element::Block>, 
+Is a sub-class of, and inherits methods from
+L<HTML::FormFu::Role::Element::Field>,
+L<HTML::FormFu::Element::Multi>,
+L<HTML::FormFu::Element::Block>,
 L<HTML::FormFu::Element>
 
 L<HTML::FormFu>

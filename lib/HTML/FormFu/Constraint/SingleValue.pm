@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Constraint::SingleValue;
+
+# ABSTRACT: Single Value Constraint
 
 use Moose;
 extends 'HTML::FormFu::Constraint';
@@ -18,10 +22,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Constraint::SingleValue - Single Value Constraint
 
 =head1 DESCRIPTION
 

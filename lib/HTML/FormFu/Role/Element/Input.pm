@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Role::Element::Input;
+
+# ABSTRACT: Role for input fields
 
 use Moose::Role;
 
@@ -9,7 +13,7 @@ with 'HTML::FormFu::Role::Element::Field',
 
 use HTML::FormFu::Util qw( literal xml_escape );
 use Clone ();
-use List::MoreUtils qw( none );
+use List::Util 1.33 qw( none );
 use Scalar::Util qw( reftype );
 use Carp qw( croak );
 
@@ -20,9 +24,7 @@ use HTML::FormFu::Attribute qw(
 use HTML::FormFu::Constants qw( $EMPTY_STR );
 use HTML::FormFu::Util qw( process_attrs xml_escape );
 
-has field_type => (
-    is => 'rw',
-);
+has field_type => ( is => 'rw', );
 
 has datalist_id => ( is => 'rw' );
 
@@ -33,18 +35,18 @@ has _datalist_options => (
     isa     => 'ArrayRef',
 );
 
-__PACKAGE__->mk_attr_accessors(qw(
-    alt         autocomplete
-    checked     maxlength
-    pattern     placeholder
-    size
-));
+__PACKAGE__->mk_attr_accessors( qw(
+        alt         autocomplete
+        checked     maxlength
+        pattern     placeholder
+        size
+) );
 
-__PACKAGE__->mk_attr_bool_accessors(qw(
-    autofocus
-    multiple
-    required
-));
+__PACKAGE__->mk_attr_bool_accessors( qw(
+        autofocus
+        multiple
+        required
+) );
 
 my @ALLOWED_OPTION_KEYS = qw(
     value
@@ -131,7 +133,8 @@ sub _parse_option_hashref {
 sub datalist_values {
     my ( $self, $arg ) = @_;
 
-    croak "datalist_values argument must be a single array-ref of values" if @_ > 2;
+    croak "datalist_values argument must be a single array-ref of values"
+        if @_ > 2;
 
     my @values;
 
@@ -142,11 +145,7 @@ sub datalist_values {
         @values = @$arg;
     }
 
-    my @new = map { {
-            value => $_,
-            label => ucfirst $_,
-        }
-    } @values;
+    my @new = map { { value => $_, label => ucfirst $_, } } @values;
 
     $self->_datalist_options( \@new );
 
@@ -158,7 +157,7 @@ around prepare_id => sub {
 
     $self->$orig($render);
 
-    return if ! @{ $self->_datalist_options };
+    return if !@{ $self->_datalist_options };
 
     if ( defined $render->{datalist_id} ) {
         $render->{attributes}{list} = $render->{datalist_id};
@@ -191,7 +190,8 @@ around prepare_id => sub {
         $render->{attributes}{list} = $id;
     }
     else {
-        croak "either 'datalist_id' or 'auto_datalist_id' must be set when using a datalist";
+        croak
+            "either 'datalist_id' or 'auto_datalist_id' must be set when using a datalist";
     }
 
     return;
@@ -200,9 +200,9 @@ around prepare_id => sub {
 around render_data_non_recursive => sub {
     my ( $orig, $self, $args ) = @_;
 
-    my $render = $self->$orig( {
-            field_type  => $self->field_type,
-            placeholder => $self->placeholder,
+    my $render = $self->$orig(
+        {   field_type                 => $self->field_type,
+            placeholder                => $self->placeholder,
             error_attributes           => xml_escape( $self->error_attributes ),
             error_container_attributes => xml_escape( $self->error_attributes ),
             $args ? %$args : (),
@@ -230,7 +230,7 @@ sub _string_field {
     my ( $self, $render ) = @_;
 
     my $html = "";
-    
+
     if ( $render->{datalist_options} ) {
         $html .= sprintf qq{<datalist id="%s">\n}, $render->{attributes}{list};
         for my $option ( @{ $render->{datalist_options} } ) {
@@ -240,7 +240,7 @@ sub _string_field {
         }
         $html .= sprintf qq{</datalist>\n};
     }
-    
+
     $html .= "<input";
 
     if ( defined $render->{nested_name} ) {
@@ -272,18 +272,14 @@ around clone => sub {
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Role::Element::Input - Role for input fields
-
 =head1 DESCRIPTION
 
-Base-class for L<HTML::FormFu::Element::Button>, 
-L<HTML::FormFu::Element::Checkbox>, 
-L<HTML::FormFu::Element::File>, 
-L<HTML::FormFu::Element::Hidden>, 
-L<HTML::FormFu::Element::Password>, 
-L<HTML::FormFu::Element::Radio>, 
+Base-class for L<HTML::FormFu::Element::Button>,
+L<HTML::FormFu::Element::Checkbox>,
+L<HTML::FormFu::Element::File>,
+L<HTML::FormFu::Element::Hidden>,
+L<HTML::FormFu::Element::Password>,
+L<HTML::FormFu::Element::Radio>,
 L<HTML::FormFu::Element::Text>.
 
 =head1 METHODS
@@ -294,7 +290,7 @@ Arguments: none
 
 Arguments: \@options
 
-Use either L</datalist_options> or L</datalist_values> to generate a 
+Use either L</datalist_options> or L</datalist_values> to generate a
 HTML5-compatible C<datalist> group of C<option> tags. This will be associated
 with the C<input> element via a C<list> attribute on the C<input> tag.
 
@@ -316,12 +312,12 @@ except hash-ref items only accept C<value> and C<label> keys (and their variants
 
 If passed no arguments, it returns an arrayref of the currently set datalist options.
 
-Its arguments must be an array-ref of items. Each item may be an array ref 
-of the form C<[ $value, $label ]> or a hash-ref of the form 
+Its arguments must be an array-ref of items. Each item may be an array ref
+of the form C<[ $value, $label ]> or a hash-ref of the form
 C<< { value => $value, label => $label } >>.
 
-When using the hash-ref construct, the C<label_xml> and C<label_loc> 
-variants of C<label> are supported, as are the C<value_xml> and C<value_loc> 
+When using the hash-ref construct, the C<label_xml> and C<label_loc>
+variants of C<label> are supported, as are the C<value_xml> and C<value_loc>
 variants of C<value>.
 
 =head2 datalist_values
@@ -340,7 +336,7 @@ Arguments: \@values
 
 A more concise alternative to L</datalist_options>.
 
-Its arguments must be an array-ref of values. The labels used are the 
+Its arguments must be an array-ref of values. The labels used are the
 result of C<ucfirst($value)>.
 
 =head2 datalist_id
@@ -404,7 +400,7 @@ When used as a setter, the return value is C<< $self >> to allow chaining.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
+Is a sub-class of, and inherits methods from
 L<HTML::FormFu::Role::Element::Field>, L<HTML::FormFu::Element>
 
 L<HTML::FormFu>

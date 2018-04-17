@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Inflator;
+
+# ABSTRACT: Inflator Base Class
 
 use Moose;
 extends 'HTML::FormFu::Processor';
@@ -54,10 +58,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Inflator - Inflator Base Class
 
 =head1 SYNOPSIS
 

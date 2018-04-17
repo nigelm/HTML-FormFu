@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Filter::HTMLEscape;
+
+# ABSTRACT: filter escaping HTML
 
 use Moose;
 extends 'HTML::FormFu::Filter';
@@ -22,10 +26,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Filter::HTMLEscape - filter escaping HTML
-
 =head1 DESCRIPTION
 
 HTML escaping filter.
@@ -34,7 +34,7 @@ HTML escaping filter.
 
 Carl Franks, C<cfranks@cpan.org>
 
-Based on the original source code of L<HTML::Widget::Filter::HTMLEscape>, by 
+Based on the original source code of L<HTML::Widget::Filter::HTMLEscape>, by
 Lyo Kato, C<lyo.kato@gmail.com>
 
 =head1 LICENSE

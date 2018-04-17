@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Plugin::StashValid;
+
+# ABSTRACT: place valid params on form stash
 
 use Moose;
 extends 'HTML::FormFu::Plugin';
@@ -22,10 +26,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Plugin::StashValid - place valid params on form stash
-
 =head1 SYNOPSIS
 
     # called on a form or block
@@ -38,14 +38,14 @@ HTML::FormFu::Plugin::StashValid - place valid params on form stash
     ---
     elements:
       - name: foo
-        plugins: 
+        plugins:
           - StashValid
 
 =head1 DESCRIPTION
 
 Run during the L<HTML::FormFu::Plugin/post_process> hook (called during
 L<HTML::FormFu/process>).
-If the named field(s) have a valid value after processing, that value is 
+If the named field(s) have a valid value after processing, that value is
 placed on the form stash, using the field-name as the stash-key.
 
 =head1 METHODS

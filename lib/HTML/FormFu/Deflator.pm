@@ -1,14 +1,18 @@
+use strict;
+
 package HTML::FormFu::Deflator;
 
+# ABSTRACT: Deflator Base Class
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 
 with 'HTML::FormFu::Role::Populate';
 
 use HTML::FormFu::Attribute qw( mk_inherited_accessors );
 use HTML::FormFu::ObjectUtil qw( form name parent );
 
-has type => ( is => 'rw', traits => ['FormFuChained'] );
+has type => ( is => 'rw', traits => ['Chained'] );
 
 __PACKAGE__->mk_inherited_accessors(qw( locale ));
 
@@ -38,10 +42,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Deflator - Deflator Base Class
 
 =head1 SYNOPSIS
 

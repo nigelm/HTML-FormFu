@@ -1,16 +1,21 @@
+use strict;
+
 package HTML::FormFu::Filter::Callback;
 
+# ABSTRACT: filter with custom subroutine
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Filter';
 
-has callback => ( is => 'rw', traits => ['FormFuChained'] );
+has callback => ( is => 'rw', traits => ['Chained'] );
 
 sub filter {
     my ( $self, $value, $params ) = @_;
 
     my $callback = $self->callback || sub {$value};
 
+    ## no critic (ProhibitNoStrict);
     no strict 'refs';
 
     return $callback->( $value, $params );
@@ -21,10 +26,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Filter::Callback - filter with custom subroutine
 
 =head1 SYNOPSIS
 
@@ -43,9 +44,9 @@ HTML::FormFu::Filter::Callback - filter with custom subroutine
 
     sub my_filter {
         my ($value) = @_;
-        
+
         # do something to $value
-        
+
         return $value;
     }
 
@@ -65,7 +66,7 @@ Arguments: "subroutine-name"
 
 Carl Franks, C<cfranks@cpan.org>
 
-Based on the original source code of L<HTML::Widget::Filter::Callback>, by 
+Based on the original source code of L<HTML::Widget::Filter::Callback>, by
 Lyo Kato, C<lyo.kato@gmail.com>
 
 =head1 LICENSE

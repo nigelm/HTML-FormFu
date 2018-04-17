@@ -1,6 +1,11 @@
+use strict;
+
 package HTML::FormFu::Element::Multi;
 
+# ABSTRACT: Combine multiple fields in a single element
+
 use Moose;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Element::Block';
 
 with
@@ -132,9 +137,7 @@ sub render_data {
 
     my $render = $self->SUPER::render_data(@_);
 
-    map {
-        delete $_->{container_tag}
-    } @{ $render->{elements} || [] };
+    map { delete $_->{container_tag} } @{ $render->{elements} || [] };
 
     return $render;
 }
@@ -152,9 +155,7 @@ sub render_data_non_recursive {
 sub _parse_layout_field {
     my ( $self, $render ) = @_;
 
-    my @html = (
-        sprintf "<span%s>", process_attrs( $render->{attributes} ),
-    );
+    my @html = ( sprintf "<span%s>", process_attrs( $render->{attributes} ), );
 
     for my $elem ( @{ $self->get_elements } ) {
         my $render = $elem->render_data;
@@ -163,7 +164,9 @@ sub _parse_layout_field {
 
         $render->{container_tag} = undef;
 
-        push @html, $elem->string( { render_data => $render, layout => $elem->multi_layout } );
+        push @html,
+            $elem->string(
+            { render_data => $render, layout => $elem->multi_layout } );
     }
 
     push @html, "</span>";
@@ -189,10 +192,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Element::Multi - Combine multiple fields in a single element
-
 =head1 SYNOPSIS
 
     my $e = $form->element( Multi => 'foo' );
@@ -215,8 +214,8 @@ their L<HTML::FormFu/render_method> value.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
-L<HTML::FormFu::Role::Element::Field>, 
+Is a sub-class of, and inherits methods from
+L<HTML::FormFu::Role::Element::Field>,
 L<HTML::FormFu::Element>
 
 L<HTML::FormFu>

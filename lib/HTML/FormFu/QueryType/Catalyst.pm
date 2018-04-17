@@ -1,15 +1,19 @@
+use strict;
+
 package HTML::FormFu::QueryType::Catalyst;
 
+# ABSTRACT: uploaded file
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 
 extends 'HTML::FormFu::Upload';
 
 use IO::File ();
 use Scalar::Util qw( weaken );
 
-has basename => ( is => 'rw', traits => ['FormFuChained'] );
-has tempname => ( is => 'rw', traits => ['FormFuChained'] );
+has basename => ( is => 'rw', traits => ['Chained'] );
+has tempname => ( is => 'rw', traits => ['Chained'] );
 
 sub parse_uploads {
     my ( $class, $form, $name ) = @_;
@@ -29,8 +33,8 @@ sub parse_uploads {
     }
 
     for my $upload (@uploads) {
-        my $param = $class->new( {
-                parent   => $form,
+        my $param = $class->new(
+            {   parent   => $form,
                 basename => $upload->basename,
                 headers  => $upload->headers,
                 filename => $upload->filename,
@@ -69,10 +73,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::QueryType::Catalyst - uploaded file
 
 =head1 DESCRIPTION
 
@@ -118,7 +118,7 @@ L<Catalyst::Request::Upload|Catalyst::Request::Upload> method.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
+Is a sub-class of, and inherits methods from
 L<HTML::FormFu::Upload>
 
 L<HTML::FormFu>, L<HTML::FormFu::Element::File>

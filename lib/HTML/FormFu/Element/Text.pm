@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Element::Text;
+
+# ABSTRACT: Text form field
 
 use Moose;
 
@@ -20,10 +24,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Element::Text - Text form field
-
 =head1 SYNOPSIS
 
     my $element = $form->element( Text => 'foo' );
@@ -34,9 +34,9 @@ Text form field.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
-L<HTML::FormFu::Role::Element::Input>, 
-L<HTML::FormFu::Role::Element::Field>, 
+Is a sub-class of, and inherits methods from
+L<HTML::FormFu::Role::Element::Input>,
+L<HTML::FormFu::Role::Element::Field>,
 L<HTML::FormFu::Element>.
 
 L<HTML::FormFu>

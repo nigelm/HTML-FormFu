@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Constraint::MaxRange;
+
+# ABSTRACT: Maximum Value Constraint
 
 use Moose;
 extends 'HTML::FormFu::Constraint::Range';
@@ -15,15 +19,11 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Constraint::MaxRange - Maximum Value Constraint
-
 =head1 DESCRIPTION
 
 Checks the input value is equal to or less than a maximum value.
 
-Overrides L<HTML::FormFu::Constraint/localize_args>, so that the value of 
+Overrides L<HTML::FormFu::Constraint/localize_args>, so that the value of
 L</maximum> is passed as an argument to L<localize|HTML::FormFu/localize>.
 
 This constraint doesn't honour the C<not()> value.

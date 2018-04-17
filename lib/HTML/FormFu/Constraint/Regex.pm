@@ -1,14 +1,18 @@
+use strict;
+
 package HTML::FormFu::Constraint::Regex;
 
+# ABSTRACT: Regex Constraint
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Constraint';
 
 use Regexp::Common;
 
-has common   => ( is => 'rw', traits => ['FormFuChained'] );
-has regex    => ( is => 'rw', traits => ['FormFuChained'] );
-has anchored => ( is => 'rw', traits => ['FormFuChained'] );
+has common   => ( is => 'rw', traits => ['Chained'] );
+has regex    => ( is => 'rw', traits => ['Chained'] );
+has anchored => ( is => 'rw', traits => ['Chained'] );
 
 sub constrain_value {
     my ( $self, $value ) = @_;
@@ -52,10 +56,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Constraint::Regex - Regex Constraint
-
 =head1 DESCRIPTION
 
 Regular expression-based constraint.
@@ -74,11 +74,11 @@ Arguments: \@parts
 
 Used to build a L<Regexp::Common> regex.
 
-The following definition is equivalent to 
+The following definition is equivalent to
 C<< $RE{URI}{HTTP}{-scheme => 'https?'} >>
 
     type: Regex
-    common: 
+    common:
       - URI
       - HTTP
       - { '-scheme': 'https?' }
@@ -100,7 +100,7 @@ L<HTML::FormFu>
 
 Carl Franks C<cfranks@cpan.org>
 
-Based on the original source code of L<HTML::Widget::Constraint::Regex>, by 
+Based on the original source code of L<HTML::Widget::Constraint::Regex>, by
 Sebastian Riedel, C<sri@oook.de>.
 
 =head1 LICENSE

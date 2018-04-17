@@ -1,16 +1,21 @@
+use strict;
+
 package HTML::FormFu::Deflator::Callback;
 
+# ABSTRACT: Callback deflator
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Deflator';
 
-has callback => ( is => 'rw', traits => ['FormFuChained'] );
+has callback => ( is => 'rw', traits => ['Chained'] );
 
 sub deflator {
     my ( $self, $value ) = @_;
 
     my $callback = $self->callback || sub {shift};
 
+    ## no critic (ProhibitNoStrict);
     no strict 'refs';
 
     return $callback->($value);
@@ -21,10 +26,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Deflator::Callback - Callback deflator
 
 =head1 SYNOPSIS
 

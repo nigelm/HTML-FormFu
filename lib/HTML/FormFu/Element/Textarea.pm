@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Element::Textarea;
+
+# ABSTRACT: Textarea form field
 
 use Moose;
 
@@ -9,13 +13,13 @@ with 'HTML::FormFu::Role::Element::Field',
 
 use HTML::FormFu::Util qw( process_attrs );
 
-__PACKAGE__->mk_attr_accessors(qw(
-    autocomplete
-    cols
-    maxlength
-    rows
-    placeholder
-));
+__PACKAGE__->mk_attr_accessors( qw(
+        autocomplete
+        cols
+        maxlength
+        rows
+        placeholder
+) );
 
 after BUILD => sub {
     my $self = shift;
@@ -52,10 +56,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Element::Textarea - Textarea form field
-
 =head1 SYNOPSIS
 
     my $element = $form->element( Textarea => 'foo' );
@@ -84,8 +84,8 @@ Return Value: $string
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
-L<HTML::FormFu::Role::Element::Field>, 
+Is a sub-class of, and inherits methods from
+L<HTML::FormFu::Role::Element::Field>,
 L<HTML::FormFu::Element>
 
 L<HTML::FormFu>

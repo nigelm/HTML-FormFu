@@ -1,16 +1,21 @@
+use strict;
+
 package HTML::FormFu::Constraint::Callback;
 
+# ABSTRACT: Code Callback Constraint
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Constraint';
 
-has callback => ( is => 'rw', traits => ['FormFuChained'] );
+has callback => ( is => 'rw', traits => ['Chained'] );
 
 sub constrain_value {
     my ( $self, $value, $params ) = @_;
 
     my $callback = $self->callback || sub {1};
 
+    ## no critic (ProhibitNoStrict);
     no strict 'refs';
 
     my $ok = $callback->( $value, $params );
@@ -23,10 +28,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Constraint::Callback - Code Callback Constraint
 
 =head1 SYNOPSIS
 

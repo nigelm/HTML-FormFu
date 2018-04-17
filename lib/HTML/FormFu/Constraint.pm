@@ -1,7 +1,11 @@
+use strict;
+
 package HTML::FormFu::Constraint;
 
+# ABSTRACT: Constrain User Input
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends 'HTML::FormFu::Processor';
 
 use HTML::FormFu::Exception::Constraint;
@@ -11,17 +15,14 @@ use HTML::FormFu::Util qw(
     debug
 );
 use Clone ();
-use List::MoreUtils qw( any );
-use Scalar::Util qw( blessed );
 use Carp qw( croak );
-use List::MoreUtils qw( any all );
-use List::Util qw( first );
+use List::Util 1.33 qw( any all first );
 use Scalar::Util qw( reftype blessed );
 
-has not          => ( is => 'rw', traits => ['FormFuChained'] );
-has force_errors => ( is => 'rw', traits => ['FormFuChained'] );
-has when         => ( is => 'rw', traits => ['FormFuChained'] );
-has only_on_reps => ( is => 'rw', traits => ['FormFuChained'] );
+has not          => ( is => 'rw', traits => ['Chained'] );
+has force_errors => ( is => 'rw', traits => ['Chained'] );
+has when         => ( is => 'rw', traits => ['Chained'] );
+has only_on_reps => ( is => 'rw', traits => ['Chained'] );
 
 sub repeatable_repeat {
     my ( $self, $repeatable, $new_block ) = @_;
@@ -81,8 +82,8 @@ sub process {
 
         if ($@) {
             push @errors,
-                $self->mk_errors( {
-                    pass    => 0,
+                $self->mk_errors(
+                {   pass    => 0,
                     message => $@,
                 } );
         }
@@ -94,8 +95,8 @@ sub process {
         DEBUG_CONSTRAINTS && debug( '$@' => $@ );
 
         push @errors,
-            $self->mk_errors( {
-                pass => ( $@ || !$ok ) ? 0 : 1,
+            $self->mk_errors(
+            {   pass => ( $@ || !$ok ) ? 0 : 1,
                 message => $@,
             } );
     }
@@ -167,8 +168,8 @@ sub constrain_values {
         DEBUG_CONSTRAINTS && debug( '$@' => $@ );
 
         push @errors,
-            $self->mk_errors( {
-                pass => ( $@ || !$ok ) ? 0 : 1,
+            $self->mk_errors(
+            {   pass => ( $@ || !$ok ) ? 0 : 1,
                 message => $@,
             } );
     }
@@ -213,8 +214,8 @@ sub mk_error {
 sub _process_when {
     my ( $self, $params ) = @_;
 
-    # returns 1 if when condition is fullfilled or not defined
-    # returns 0 if when condition is defined and not fullfilled
+    # returns 1 if when condition is fulfilled or not defined
+    # returns 0 if when condition is defined and not fulfilled
     # If it's a callback, return callback's return value (so 'when'
     # condition is met if callback returns a true value)
 
@@ -238,6 +239,7 @@ sub _process_when {
 
     # Callback will be the preferred thing
     if ($when_callback) {
+        ## no critic (ProhibitNoStrict);
         no strict 'refs';
         return $when_callback->( $params, $self );
     }
@@ -272,7 +274,8 @@ sub _process_when {
             if defined $value;
     }
 
-    DEBUG_CONSTRAINTS_WHEN && debug( 'WHEN_FIELDS_VALUES' => \@when_fields_value );
+    DEBUG_CONSTRAINTS_WHEN
+        && debug( 'WHEN_FIELDS_VALUES' => \@when_fields_value );
 
     if ( !@when_fields_value ) {
         DEBUG_CONSTRAINTS_WHEN
@@ -316,13 +319,13 @@ sub _process_when {
 }
 
 sub fetch_error_message {
-    my ( $self ) = @_;
+    my ($self) = @_;
 
-    my $error = HTML::FormFu::Exception::Constraint->new({
-        form      => $self->form,
-        parent    => $self->parent,
-        processor => $self,
-    });
+    my $error = HTML::FormFu::Exception::Constraint->new(
+        {   form      => $self->form,
+            parent    => $self->parent,
+            processor => $self,
+        } );
 
     return $error->message;
 }
@@ -344,10 +347,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Constraint - Constrain User Input
 
 =head1 SYNOPSIS
 
@@ -473,7 +472,7 @@ Shorthand for C<< $constraint->parent->name >>
 
 =head2 when
 
-Defines a condition for the constraint. Only when the condition is fullfilled
+Defines a condition for the constraint. Only when the condition is fulfilled
 the constraint will be applied.
 
 This method expects a hashref.
@@ -489,7 +488,7 @@ The following keys are supported:
 
 =item field
 
-Nested-name of form field that shall be checked against - if C<when->{value}>
+Nested-name of form field that shall be checked against - if C<< when->{value} >>
 is set, the C<when> condition passes if the named field's value matches that,
 otherwise the C<when> condition passes if the named field's value is true.
 
@@ -509,7 +508,7 @@ Expected value in the form field 'field'
 
 =item values
 
-Array of multiple values, one must match to fullfill the condition
+Array of multiple values, one must match to fulfill the condition
 
 =item not
 
@@ -519,7 +518,7 @@ Inverts the when condition - value(s) must not match
 
 A callback subroutine-reference or fully resolved subroutine name can be
 supplied to perform complex checks. An hashref of all parameters is passed
-to the callback sub. In this case all other keys are ignored, including not.
+to the callback sub. In this case all other keys are ignored, including C<not>.
 You need to return a true value for the constraint to be applied or a false
 value to not apply it.
 
@@ -545,11 +544,11 @@ C<$constraint> (the Constraint object)
 
 Return value: $string
 
-Attempt to return the error message that would be used if this constraint 
+Attempt to return the error message that would be used if this constraint
 generated an error.
 
 This will generally be correct for simple constraints with a fixed message or
-which use a placeholder from a known value, such as 
+which use a placeholder from a known value, such as
 L<HTML::FormFu::Constraint::Min/min>.
 This will generally C<not> return the correct message for constraints which
 use L<HTML::FormFu::Role::Constraint::Others/others>, where the field with an
@@ -590,6 +589,8 @@ error is not known without actually fully processing a form submission.
 =item L<HTML::FormFu::Constraint::File::Size>
 
 =item L<HTML::FormFu::Constraint::Integer>
+
+=item L<HTML::FormFu::Constraint::JSON>
 
 =item L<HTML::FormFu::Constraint::Length>
 

@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Constraint::AllOrNone;
+
+# ABSTRACT: Multi-field All or None Constraint
 
 use Moose;
 extends 'HTML::FormFu::Constraint';
@@ -45,8 +49,8 @@ sub process {
 
     my $pass = @failed && scalar @failed != scalar @names ? 0 : 1;
 
-    return $self->mk_errors( {
-            pass   => $pass,
+    return $self->mk_errors(
+        {   pass   => $pass,
             failed => $pass ? [] : \@failed,
             names  => \@names,
         } );
@@ -66,10 +70,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Constraint::AllOrNone - Multi-field All or None Constraint
-
 =head1 SYNOPSIS
 
     type: AllOrNone
@@ -80,8 +80,8 @@ HTML::FormFu::Constraint::AllOrNone - Multi-field All or None Constraint
 
 Ensure that either all or none of the named fields are present.
 
-By default, if some but not all fields are submitted, errors are attached to 
-those fields which weren't submitted. This behaviour can be changed by setting 
+By default, if some but not all fields are submitted, errors are attached to
+those fields which weren't submitted. This behaviour can be changed by setting
 any of L<HTML::FormFu::Role::Constraint::Others/attach_errors_to_base>,
 L<HTML::FormFu::Role::Constraint::Others/attach_errors_to_others> or
 L<HTML::FormFu::Role::Constraint::Others/attach_errors_to>.
@@ -90,7 +90,7 @@ This constraint doesn't honour the C<not()> value.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from  
+Is a sub-class of, and inherits methods from
 L<HTML::FormFu::Role::Constraint::Others>, L<HTML::FormFu::Constraint>
 
 L<HTML::FormFu>

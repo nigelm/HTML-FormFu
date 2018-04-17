@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Constraint::Printable;
+
+# ABSTRACT: Printable Characters Constraint
 
 use Moose;
 extends 'HTML::FormFu::Constraint::Regex';
@@ -13,13 +17,9 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Constraint::Printable - Printable Characters Constraint
-
 =head1 DESCRIPTION
 
-Constraint that checks against the unicode C<print> character class, 
+Constraint that checks against the unicode C<print> character class,
 (Alphanumeric, punct, and space).
 
 =head1 SEE ALSO

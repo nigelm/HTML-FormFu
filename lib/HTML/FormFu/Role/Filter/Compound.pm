@@ -1,9 +1,12 @@
+use strict;
+
 package HTML::FormFu::Role::Filter::Compound;
 
-use Moose::Role;
-use MooseX::Attribute::FormFuChained;
+# ABSTRACT: Role for Compound filters
 
-has field_order => ( is => 'rw', traits => ['FormFuChained'] );
+use Moose::Role;
+
+has field_order => ( is => 'rw', traits => ['Chained'] );
 
 sub _get_values {
     my ( $self, $value ) = @_;
@@ -35,29 +38,25 @@ sub _get_values {
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Role::Filter::Compound - Role for Compound filters
-
 =head1 METHODS
 
 =head2 field_order
 
 Arguments: \@order
 
-If the submitted parts should be joined in an order different than that of the 
-order of the fields, you must provide an arrayref containing the names, in the 
+If the submitted parts should be joined in an order different than that of the
+order of the fields, you must provide an arrayref containing the names, in the
 order they should be joined.
 
     ---
     element:
       - type: Multi
         name: address
-        
+
         elements:
           - name: street
           - name: number
-        
+
         filter:
           - type: CompoundJoin
             field_order:

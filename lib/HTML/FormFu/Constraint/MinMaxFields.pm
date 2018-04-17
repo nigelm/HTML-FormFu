@@ -1,7 +1,11 @@
+use strict;
+
 package HTML::FormFu::Constraint::MinMaxFields;
 
+# ABSTRACT: Min/Max Multi-field Constraint
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 use MooseX::Aliases;
 extends 'HTML::FormFu::Constraint';
 
@@ -12,13 +16,13 @@ use HTML::FormFu::Util qw( DEBUG_CONSTRAINTS debug );
 has minimum => (
     is     => 'rw',
     alias  => 'min',
-    traits => ['FormFuChained'],
+    traits => ['Chained'],
 );
 
 has maximum => (
     is     => 'rw',
     alias  => 'max',
-    traits => ['FormFuChained'],
+    traits => ['Chained'],
 );
 
 after BUILD => sub {
@@ -79,8 +83,8 @@ sub process {
 
     my $pass = ( $count < $min || $count > $max ) ? 0 : 1;
 
-    return $self->mk_errors( {
-            pass   => $pass,
+    return $self->mk_errors(
+        {   pass   => $pass,
             failed => $pass ? [] : \@names,
             names  => \@names,
         } );
@@ -101,10 +105,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Constraint::MinMaxFields - Min/Max Multi-field Constraint
-
 =head1 SYNOPSIS
 
     type: MinMaxFields
@@ -115,7 +115,7 @@ HTML::FormFu::Constraint::MinMaxFields - Min/Max Multi-field Constraint
 
 =head1 DESCRIPTION
 
-Ensure that at least a minimum and only a maximum number of fields are 
+Ensure that at least a minimum and only a maximum number of fields are
 present.
 
 This constraint doesn't honour the C<not()> value.
@@ -151,7 +151,7 @@ Default Value: 0
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from  
+Is a sub-class of, and inherits methods from
 L<HTML::FormFu::Role::Constraint::Others>, L<HTML::FormFu::Constraint>
 
 L<HTML::FormFu>

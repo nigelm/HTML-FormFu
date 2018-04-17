@@ -1,7 +1,8 @@
 use strict;
-use warnings;
 
 package HTML::FormFu::Preload;
+
+use warnings;
 
 use HTML::FormFu;
 

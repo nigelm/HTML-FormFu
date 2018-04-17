@@ -1,3 +1,5 @@
+use strict;
+
 package HTML::FormFu::Role::ContainsElementsSharedWithField;
 
 use Moose::Role;
@@ -7,8 +9,6 @@ use HTML::FormFu::Util qw(
     _merge_hashes
 );
 use Carp qw( croak );
-use List::MoreUtils qw( none uniq );
-use Scalar::Util qw( refaddr weaken );
 
 sub get_error {
     my $self = shift;
@@ -46,8 +46,8 @@ sub _require_constraint {
 
     require_class($class);
 
-    my $constraint = $class->new( {
-            type   => $type,
+    my $constraint = $class->new(
+        {   type   => $type,
             not    => $not,
             parent => $self,
         } );

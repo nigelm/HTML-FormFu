@@ -1,7 +1,11 @@
+use strict;
+
 package HTML::FormFu::Element::ContentButton;
 
+# ABSTRACT: Button form field containing markup
+
 use Moose;
-use MooseX::Attribute::FormFuChained;
+use MooseX::Attribute::Chained;
 extends "HTML::FormFu::Element";
 with 'HTML::FormFu::Role::Element::Field',
     'HTML::FormFu::Role::Element::SingleValueField';
@@ -14,7 +18,7 @@ has field_type => (
     is      => 'rw',
     default => 'button',
     lazy    => 1,
-    traits  => ['FormFuChained'],
+    traits  => ['Chained'],
 );
 
 after BUILD => sub {
@@ -28,8 +32,8 @@ after BUILD => sub {
 sub render_data_non_recursive {
     my ( $self, $args ) = @_;
 
-    my $render = $self->SUPER::render_data_non_recursive( {
-            field_type => $self->field_type,
+    my $render = $self->SUPER::render_data_non_recursive(
+        {   field_type => $self->field_type,
             content    => xml_escape( $self->content ),
             $args ? %$args : (),
         } );
@@ -65,10 +69,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Element::ContentButton - Button form field containing markup
-
 =head1 SYNOPSIS
 
     ---
@@ -90,8 +90,8 @@ content_button form field, rendered using provided markup.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
-L<HTML::FormFu::Role::Element::Field>, 
+Is a sub-class of, and inherits methods from
+L<HTML::FormFu::Role::Element::Field>,
 L<HTML::FormFu::Element>
 
 L<HTML::FormFu>

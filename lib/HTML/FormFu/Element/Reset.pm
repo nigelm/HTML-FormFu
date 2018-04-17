@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Element::Reset;
+
+# ABSTRACT: Reset button form field
 
 use Moose;
 
@@ -18,10 +22,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Element::Reset - Reset button form field
-
 =head1 SYNOPSIS
 
     $e = $form->element( Reset => 'foo' );
@@ -34,10 +34,10 @@ Reset button form field.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
-L<HTML::FormFu::Element::Button>, 
-L<HTML::FormFu::Role::Element::Input>, 
-L<HTML::FormFu::Role::Element::Field>, 
+Is a sub-class of, and inherits methods from
+L<HTML::FormFu::Element::Button>,
+L<HTML::FormFu::Role::Element::Input>,
+L<HTML::FormFu::Role::Element::Field>,
 L<HTML::FormFu::Element>
 
 L<HTML::FormFu>

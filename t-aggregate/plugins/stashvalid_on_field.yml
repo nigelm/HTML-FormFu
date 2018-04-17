@@ -1,6 +1,0 @@
----
-elements:
-  - name: foo
-    plugin: StashValid
-  
-  - name: bar

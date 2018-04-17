@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::QueryType::CGI::Simple;
+
+# ABSTRACT: uploaded file
 
 use Moose;
 
@@ -15,8 +19,8 @@ sub parse_uploads {
         if ( my $file = $query->upload($param) ) {
             my $filename = $param;
 
-            $param = $class->new( {
-                    _param   => $file,
+            $param = $class->new(
+                {   _param   => $file,
                     filename => $filename,
                     parent   => $form,
                 } );
@@ -50,10 +54,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::QueryType::CGI::Simple - uploaded file
-
 =head1 METHODS
 
 =head2 headers
@@ -82,7 +82,7 @@ Inherited, see L<HTML::FormFu::QueryType::CGI/type> for details.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
+Is a sub-class of, and inherits methods from
 L<HTML::FormFu::QueryType::CGI>, L<HTML::FormFu::Upload>
 
 L<HTML::FormFu>, L<HTML::FormFu::Element::File>

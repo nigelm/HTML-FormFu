@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Element::Fieldset;
+
+# ABSTRACT: Fieldset element
 
 use Moose;
 extends 'HTML::FormFu::Element::Block';
@@ -20,8 +24,8 @@ after BUILD => sub {
 sub render_data_non_recursive {
     my ( $self, $args ) = @_;
 
-    my $render = $self->SUPER::render_data_non_recursive( {
-            legend            => $self->legend,
+    my $render = $self->SUPER::render_data_non_recursive(
+        {   legend            => $self->legend,
             legend_attributes => xml_escape( $self->legend_attributes ),
             $args ? %$args : (),
         } );
@@ -34,10 +38,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Element::Fieldset - Fieldset element
 
 =head1 SYNOPSIS
 
@@ -57,13 +57,13 @@ If L</legend> is set, it is used as the fieldset's legend
 
 Arguments: $localization_key
 
-To set the legend to a localized string, set L</legend_loc> to a key in 
+To set the legend to a localized string, set L</legend_loc> to a key in
 your L10N file instead of using L</legend>.
 
 =head1 SEE ALSO
 
-Is a sub-class of, and inherits methods from 
-L<HTML::FormFu::Element::Block>, 
+Is a sub-class of, and inherits methods from
+L<HTML::FormFu::Element::Block>,
 L<HTML::FormFu::Element>
 
 L<HTML::FormFu>

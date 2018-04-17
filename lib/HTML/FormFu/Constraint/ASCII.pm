@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Constraint::ASCII;
+
+# ABSTRACT: ASCII Characters Constraint
 
 use Moose;
 extends 'HTML::FormFu::Constraint::Regex';
@@ -12,10 +16,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Constraint::ASCII - ASCII Characters Constraint
 
 =head1 DESCRIPTION
 

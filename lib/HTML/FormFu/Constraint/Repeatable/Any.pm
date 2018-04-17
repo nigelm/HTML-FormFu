@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Constraint::Repeatable::Any;
+
+# ABSTRACT: Ensure at least 1 of a repeated field is filled-in
 
 use Moose;
 
@@ -104,7 +108,10 @@ sub constrain_value {
 sub _localize_args {
     my ($self) = @_;
 
-    return $self->parent->label || $self->parent->original_name || $self->parent->name;
+    return
+           $self->parent->label
+        || $self->parent->original_name
+        || $self->parent->name;
 }
 
 __PACKAGE__->meta->make_immutable;
@@ -112,10 +119,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-HTML::FormFu::Constraint::Repeatable::Any - Ensure at least 1 of a repeated field is filled-in
 
 =head1 SYNOPSIS
 

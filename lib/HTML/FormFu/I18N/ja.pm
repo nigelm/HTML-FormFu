@@ -1,3 +1,5 @@
+use strict;
+
 package HTML::FormFu::I18N::ja;
 
 use utf8;

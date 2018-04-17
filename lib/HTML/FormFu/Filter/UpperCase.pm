@@ -1,4 +1,8 @@
+use strict;
+
 package HTML::FormFu::Filter::UpperCase;
+
+# ABSTRACT: filter transforming to upper case
 
 use Moose;
 extends 'HTML::FormFu::Filter';
@@ -17,10 +21,6 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=head1 NAME
-
-HTML::FormFu::Filter::UpperCase - filter transforming to upper case
-
 =head1 DESCRIPTION
 
 UpperCase transforming filter.
@@ -29,7 +29,7 @@ UpperCase transforming filter.
 
 Carl Franks, C<cfranks@cpan.org>
 
-Based on the original source code of L<HTML::Widget::Filter::UpperCase>, by 
+Based on the original source code of L<HTML::Widget::Filter::UpperCase>, by
 Lyo Kato, C<lyo.kato@gmail.com>
 
 =head1 LICENSE

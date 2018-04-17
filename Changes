@@ -1,5 +1,70 @@
 {{$NEXT}}
 
+    - New JSON Constraint
+
+    - Improve email tests, so that MX tests are only run if internet access
+
+    - Tests improved to ensure all locales pass
+
+    - Corrected Email Validation so that spaces in the address cause failures
+
+    - add new auto_error_field_class() method to add classes directly
+      to field tag
+
+    - constraints_from_dbic() can now be called on Blocks,
+      handles 'nested_name', and support added for BOOL and DECIMAL columns
+
+    - remove bundled/renamed MooseX::Attribute::Chained and depend on the
+      fixed version
+
+    - Remove out-of-date reference to lacunaexpanse.
+
+2.05      2016-10-07 15:34:52+01:00 Europe/London
+
+    - Release machinery - dzil transition to @Starter and simplification
+
+2.04 2016-09-30
+
+    - HTML::FormFu::Validator::Callback now passes the $params hash to
+      callback subs.
+    - No longer use Test::Aggregate - RT#117137
+    - Update list of contributors
+    - Code tidying (Karen Etheridge):-
+      - remove duplicate "use" lines
+      - remove unused exports
+      - use subs from List::Util preferentially (which is in core)
+      - fix some pod markup
+      - properly document core validators (RT#118022)
+      - preserve the exception message in case of validation error
+    - Spelling fixes from Debian - RT#115812
+    - [Release of 2.04 was a trial/devel release only]
+
+2.03 2016-06-24
+
+    - Bug fix: RT#109159 Number formatting tests can fail
+    - Bug fix: RT#112582 Date tests fail on leap day
+    - Minor packaging fixups
+
+2.02 2016-06-01
+
+    - Public release of 2.02
+
+2.01_03 2016-05-25
+
+    - cleanup unused modules and functions
+    - fix indirect object notation
+    - add label functionality
+    - ensure disabled attributes are ignored
+    - strip excessive/trailing whitespace
+    - fix inflator bug RT76034
+    - avoid warnings from CGI
+    - enable more author/release tests
+    - it language fixes
+    - Remove link to old website - now unrelated/NSFW
+    - avoid emitting unecessary warnings
+    - enable use of Travis CI & coverage tests
+    - fixes to ensure we pass all the additional author tests
+
 2.01 2014-05-05
 
     - Avoid uninitialized warning
